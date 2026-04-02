@@ -1,11 +1,11 @@
 import { useGame } from '../context/GameContext.jsx';
-import openingBg from '../assets/opening-interface.png';
-import titleImg from '../assets/title.png';
-import startBtnImg from '../assets/start-btn.png';
-import starImg from '../assets/Star.png';
-import noteImg from '../assets/音符.png';
-import note2Img from '../assets/音符2.png';
-import flashImg from '../assets/flash.png';
+import openingBg from '../assets/screens/opening-interface.png';
+import titleImg from '../assets/ui/title.png';
+import startBtnImg from '../assets/ui/start-btn.png';
+import starImg from '../assets/ui/Star.png';
+import noteImg from '../assets/ui/音符.png';
+import note2Img from '../assets/ui/音符2.png';
+import flashImg from '../assets/ui/flash.png';
 
 export function StartScreen() {
   const { navigate } = useGame();

@@ -1,6 +1,6 @@
 import { useGame } from '../context/GameContext.jsx';
 import { PLAYLIST_SIZE } from '../constants.js';
-import closeImg from '../assets/close.png';
+import closeImg from '../assets/ui/close.png';
 
 export function MissionPanel() {
   const { state, dispatch, characters } = useGame();

@@ -1,8 +1,10 @@
 import { useGame } from '../context/GameContext.jsx';
-import noteImg from '../assets/音符.png';
-import note2Img from '../assets/音符2.png';
-import nextImg from '../assets/next.png';
-import backImg from '../assets/back.png';
+import noteImg from '../assets/ui/音符.png';
+import note2Img from '../assets/ui/音符2.png';
+import nextImg from '../assets/ui/next.png';
+import backImg from '../assets/ui/back.png';
+import taskBtnImg from '../assets/ui/task-btn.png';
+import helpBtnImg from '../assets/ui/help-btn.png';
 import { Toast } from '../components/Toast.jsx';
 import { MissionPanel } from '../components/MissionPanel.jsx';
 import { HelpPanel } from '../components/HelpPanel.jsx';
@@ -29,11 +31,11 @@ export function GameplayScreen() {
       <header className="game-header">
         <button
           type="button"
-          className="btn-icon"
+          className="btn-icon btn-icon--asset"
           aria-label="Mission list"
           onClick={() => dispatch({ type: 'OPEN_MISSION' })}
         >
-          !
+          <img src={taskBtnImg} alt="" width={48} height={48} decoding="async" />
         </button>
         <div className="game-title-wrap">
           <img src={note2Img} alt="" className="game-deco game-deco--l" width={32} height={32} />
@@ -42,11 +44,11 @@ export function GameplayScreen() {
         </div>
         <button
           type="button"
-          className="btn-icon"
+          className="btn-icon btn-icon--asset"
           aria-label="How to play"
           onClick={() => dispatch({ type: 'OPEN_HELP' })}
         >
-          ?
+          <img src={helpBtnImg} alt="" width={48} height={48} decoding="async" />
         </button>
       </header>
 

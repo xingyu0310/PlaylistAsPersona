@@ -1,6 +1,6 @@
 import { useGame } from '../context/GameContext.jsx';
 import { PLAYLIST_SIZE } from '../constants.js';
-import noteImg from '../assets/音符.png';
+import noteImg from '../assets/ui/音符.png';
 
 export function TutorialScreen() {
   const { navigate } = useGame();

@@ -1,10 +1,10 @@
 import { useGame } from '../context/GameContext.jsx';
-import starImg from '../assets/Star.png';
-import noteImg from '../assets/音符.png';
-import note2Img from '../assets/音符2.png';
-import flashImg from '../assets/flash.png';
-import lineImg from '../assets/Line.png';
-import continueBtnImg from '../assets/continue-btn.png';
+import starImg from '../assets/ui/Star.png';
+import noteImg from '../assets/ui/音符.png';
+import note2Img from '../assets/ui/音符2.png';
+import flashImg from '../assets/ui/flash.png';
+import lineImg from '../assets/ui/Line.png';
+import continueBtnImg from '../assets/ui/continue-btn.png';
 
 export function IntroScreen() {
   const { navigate } = useGame();
