@@ -1,0 +1,113 @@
+[
+  {
+    "id": "flashbeat",
+    "name": "Flash Beat",
+    "profession": "Influencer / DJ",
+    "mbti": "ESFP",
+    "tagline": "",
+    "avatar": "",
+    "profileImage": "",
+    "taskBlurb": "Flash Beat is an up-and-coming musician influencer on BurrowBeats. He often uses shared tracks to **shape his image** and **chase opportunities**. Pick **3** songs from his listening history for his **Public Playlist**.",
+    "stories": [
+      {
+        "id": "mic",
+        "object": "Microphone",
+        "text": "(TBD) The first time he stepped up to a mic…"
+      },
+      {
+        "id": "console",
+        "object": "Tamagotchi / game console",
+        "text": "(TBD) 8-bit games and childhood sound…"
+      },
+      {
+        "id": "guitar",
+        "object": "Electric guitar",
+        "text": "(TBD) Teen years and the distortion knob…"
+      },
+      {
+        "id": "crowd",
+        "object": "Stage / crowd",
+        "text": "(TBD) The crowd on stage vs. being watched…"
+      }
+    ],
+    "listeningHistory": [
+      {
+        "id": "song_glitching",
+        "title": "Glitching Heartbeat",
+        "time": "02:05 AM",
+        "description": "(TBD)"
+      },
+      {
+        "id": "song_empty",
+        "title": "Empty Dancefloor Echo",
+        "time": "02:01 AM",
+        "description": "(TBD)"
+      },
+      {
+        "id": "song_pocket",
+        "title": "Pocket Galaxy (8-Bit Dream)",
+        "time": "09:51 PM",
+        "description": "Nostalgic 8-bit tones building a tiny pocket universe.",
+        "playCount": 27,
+        "artist": "Pixel Stable",
+        "artistHandle": "@Pixel Stable",
+        "tags": ["#childhood", "#Tamagotchi", "#early digital memory"],
+        "genre": "Chiptune / 8-bit electronica",
+        "lyricsFragment": "tiny stars\ninside a pocket screen",
+        "albumArt": "",
+        "artistAvatar": ""
+      },
+      {
+        "id": "song_signal",
+        "title": "Signal In Control",
+        "time": "03:34 PM",
+        "description": "(TBD)"
+      },
+      {
+        "id": "song_neon",
+        "title": "Neon Drop Theory",
+        "time": "01:18 PM",
+        "description": "(TBD)"
+      }
+    ],
+    "correctPublicPlaylist": ["song_pocket", "song_signal", "song_neon"]
+  },
+  {
+    "id": "softframe",
+    "name": "Soft Frame",
+    "profession": "(TBD)",
+    "mbti": "(TBD)",
+    "tagline": "",
+    "avatar": "",
+    "profileImage": "",
+    "taskBlurb": "(TBD) Task description for this character.",
+    "stories": [{ "id": "sf1", "object": "(Item)", "text": "(TBD)" }],
+    "listeningHistory": [
+      { "id": "sf_s1", "title": "(Song A)", "time": "12:00 AM", "description": "" },
+      { "id": "sf_s2", "title": "(Song B)", "time": "01:00 PM", "description": "" },
+      { "id": "sf_s3", "title": "(Song C)", "time": "02:00 PM", "description": "" },
+      { "id": "sf_s4", "title": "(Song D)", "time": "03:00 PM", "description": "" },
+      { "id": "sf_s5", "title": "(Song E)", "time": "04:00 PM", "description": "" }
+    ],
+    "correctPublicPlaylist": ["sf_s3", "sf_s4", "sf_s5"]
+  },
+  {
+    "id": "marshmallow",
+    "name": "Marshmallow",
+    "profession": "(TBD)",
+    "mbti": "(TBD)",
+    "tagline": "",
+    "avatar": "",
+    "profileImage": "",
+    "taskBlurb": "(TBD) Task description for this character.",
+    "stories": [{ "id": "mm1", "object": "(Item)", "text": "(TBD)" }],
+    "listeningHistory": [
+      { "id": "mm_s1", "title": "(Song A)", "time": "12:00 AM", "description": "" },
+      { "id": "mm_s2", "title": "(Song B)", "time": "01:00 PM", "description": "" },
+      { "id": "mm_s3", "title": "(Song C)", "time": "02:00 PM", "description": "" },
+      { "id": "mm_s4", "title": "(Song D)", "time": "03:00 PM", "description": "" },
+      { "id": "mm_s5", "title": "(Song E)", "time": "04:00 PM", "description": "" }
+    ],
+    "correctPublicPlaylist": ["mm_s1", "mm_s2", "mm_s3"]
+  }
+]
