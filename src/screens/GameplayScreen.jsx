@@ -109,7 +109,7 @@ export function GameplayScreen() {
                   )}
                 </div>
                 <div className="profile-main-col">
-                  <div className="profile-fields">
+                  <div className="profile-fields" data-character-id={currentCharacter.id}>
                     <p>
                       <span className="label">Name</span> {currentCharacter.name}
                     </p>

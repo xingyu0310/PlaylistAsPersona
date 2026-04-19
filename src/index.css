@@ -568,10 +568,6 @@ h1.intro-header {
   z-index: 1;
 }
 
-.panel-profile--torn .profile-fields .label {
-  color: #6b21a8;
-}
-
 .panel-profile--torn .link-learn {
   color: var(--ink);
 }
@@ -744,10 +740,32 @@ h1.intro-header {
   text-align: center;
 }
 
+/* Name / Profession / MBTI — labels use accent; values stay black */
+.profile-fields[data-character-id='flashbeat'] {
+  --profile-stat-color: #ffc400;
+}
+.profile-fields[data-character-id='softframe'] {
+  --profile-stat-color: #a1e7da;
+}
+.profile-fields[data-character-id='marshmallow'] {
+  --profile-stat-color: #cf0320;
+}
+
+.profile-fields[data-character-id] > p:not(.tagline) {
+  color: #000;
+}
+
+.profile-fields[data-character-id] .label {
+  color: var(--profile-stat-color);
+}
+
 .profile-fields .label {
   font-weight: 700;
-  color: #fde047;
   margin-right: 0.35rem;
+}
+
+.profile-fields:not([data-character-id]) .label {
+  color: #fde047;
 }
 
 .profile-fields p {

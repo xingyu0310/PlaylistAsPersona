@@ -75,38 +75,88 @@
   {
     "id": "softframe",
     "name": "Soft Frame",
-    "profession": "(TBD)",
-    "mbti": "(TBD)",
+    "profession": "Designer",
+    "mbti": "INFP",
     "tagline": "",
     "avatar": "",
     "profileImage": "",
     "taskBlurb": "(TBD) Task description for this character.",
     "stories": [{ "id": "sf1", "object": "(Item)", "text": "(TBD)" }],
     "listeningHistory": [
-      { "id": "sf_s1", "title": "(Song A)", "time": "12:00 AM", "description": "" },
-      { "id": "sf_s2", "title": "(Song B)", "time": "01:00 PM", "description": "" },
-      { "id": "sf_s3", "title": "(Song C)", "time": "02:00 PM", "description": "" },
-      { "id": "sf_s4", "title": "(Song D)", "time": "03:00 PM", "description": "" },
-      { "id": "sf_s5", "title": "(Song E)", "time": "04:00 PM", "description": "" }
+      {
+        "id": "sf_s1",
+        "title": "Gloss on the Window",
+        "time": "05:05 PM",
+        "description": ""
+      },
+      {
+        "id": "sf_s2",
+        "title": "Curtain Call in My Bedroom",
+        "time": "09:40 PM",
+        "description": ""
+      },
+      {
+        "id": "sf_s3",
+        "title": "Cherry Lip Gloss Theory",
+        "time": "09:51 PM",
+        "description": ""
+      },
+      {
+        "id": "sf_s4",
+        "title": "Velvet Polaroid",
+        "time": "09:56 PM",
+        "description": ""
+      },
+      {
+        "id": "sf_s5",
+        "title": "Curtain Call in My Bedroom",
+        "time": "11:18 PM",
+        "description": ""
+      }
     ],
     "correctPublicPlaylist": ["sf_s3", "sf_s4", "sf_s5"]
   },
   {
     "id": "marshmallow",
     "name": "Marshmallow",
-    "profession": "(TBD)",
-    "mbti": "(TBD)",
+    "profession": "Student",
+    "mbti": "INFJ",
     "tagline": "",
     "avatar": "",
     "profileImage": "",
     "taskBlurb": "(TBD) Task description for this character.",
     "stories": [{ "id": "mm1", "object": "(Item)", "text": "(TBD)" }],
     "listeningHistory": [
-      { "id": "mm_s1", "title": "(Song A)", "time": "12:00 AM", "description": "" },
-      { "id": "mm_s2", "title": "(Song B)", "time": "01:00 PM", "description": "" },
-      { "id": "mm_s3", "title": "(Song C)", "time": "02:00 PM", "description": "" },
-      { "id": "mm_s4", "title": "(Song D)", "time": "03:00 PM", "description": "" },
-      { "id": "mm_s5", "title": "(Song E)", "time": "04:00 PM", "description": "" }
+      {
+        "id": "mm_s1",
+        "title": "Thread Through Summer",
+        "time": "04:36 PM",
+        "description": ""
+      },
+      {
+        "id": "mm_s2",
+        "title": "After 4PM",
+        "time": "05:08 PM",
+        "description": ""
+      },
+      {
+        "id": "mm_s3",
+        "title": "The Meaning of Leaving",
+        "time": "05:51 PM",
+        "description": ""
+      },
+      {
+        "id": "mm_s4",
+        "title": "Stone in Her Sugar Cup",
+        "time": "01:18 AM",
+        "description": ""
+      },
+      {
+        "id": "mm_s5",
+        "title": "It's raining",
+        "time": "11:42 PM",
+        "description": ""
+      }
     ],
     "correctPublicPlaylist": ["mm_s1", "mm_s2", "mm_s3"]
   }
