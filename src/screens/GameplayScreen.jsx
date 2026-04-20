@@ -5,10 +5,13 @@ import nextImg from '../assets/ui/next.png';
 import backImg from '../assets/ui/back.png';
 import taskBtnImg from '../assets/ui/task-btn.png';
 import helpBtnImg from '../assets/ui/help-btn.png';
+import saveBtnImg from '../assets/ui/save-btn.png';
+import doneBtnImg from '../assets/ui/done-btn.png';
 import { Toast } from '../components/Toast.jsx';
 import { MissionPanel } from '../components/MissionPanel.jsx';
 import { HelpPanel } from '../components/HelpPanel.jsx';
 import { SongDetailModal } from '../components/SongDetailModal.jsx';
+import { FLASHBEAT_STORY_OBJECT_BY_ID } from '../utils/flashbeatStoryObjects.js';
 
 function songById(character, id) {
   return character.listeningHistory.find((s) => s.id === id);
@@ -167,14 +170,50 @@ export function GameplayScreen() {
                 <img src={backImg} alt="" width={80} height={80} decoding="async" />
               </button>
               <h2 className="subheading">Objects &amp; stories</h2>
-              <ul className="story-grid">
-                {(currentCharacter.stories?.length ? currentCharacter.stories : []).map((s) => (
-                  <li key={s.id} className="story-card">
-                    <span className="story-obj">{s.object}</span>
-                    <p>{s.text}</p>
-                  </li>
-                ))}
-              </ul>
+              {currentCharacter.id === 'flashbeat' ? (
+                <ul className="story-grid story-grid--flashbeat">
+                  {(currentCharacter.stories || []).map((s, i) => {
+                    const art = FLASHBEAT_STORY_OBJECT_BY_ID[s.id];
+                    const iconRight = i % 2 === 1;
+                    return (
+                      <li
+                        key={s.id}
+                        className={`story-row ${iconRight ? 'story-row--icon-right' : 'story-row--icon-left'}`}
+                      >
+                        {art ? (
+                          <img
+                            className="story-object-img"
+                            src={art}
+                            alt=""
+                            width={64}
+                            height={64}
+                            decoding="async"
+                          />
+                        ) : null}
+                        <div className="story-bubble">
+                          <p className="story-text">
+                            {s.text.split('\n').map((line, j, arr) => (
+                              <span key={j}>
+                                {line}
+                                {j < arr.length - 1 ? <br /> : null}
+                              </span>
+                            ))}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <ul className="story-grid">
+                  {(currentCharacter.stories?.length ? currentCharacter.stories : []).map((s) => (
+                    <li key={s.id} className="story-card">
+                      <span className="story-obj">{s.object}</span>
+                      <p>{s.text}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {(!currentCharacter.stories || currentCharacter.stories.length === 0) && (
                 <p className="muted">(Add stories in the stories array in characters.json.)</p>
               )}
@@ -232,13 +271,19 @@ export function GameplayScreen() {
       <footer className="game-footer">
         <button
           type="button"
-          className="btn btn-save"
+          className="btn-icon btn-icon--asset"
+          aria-label="Save"
           onClick={() => dispatch({ type: 'SAVE_CHARACTER' })}
         >
-          Save
+          <img src={saveBtnImg} alt="" width={48} height={48} decoding="async" />
         </button>
-        <button type="button" className="btn btn-done" onClick={() => dispatch({ type: 'SUBMIT' })}>
-          Done
+        <button
+          type="button"
+          className="btn-icon btn-icon--asset"
+          aria-label="Done"
+          onClick={() => dispatch({ type: 'SUBMIT' })}
+        >
+          <img src={doneBtnImg} alt="" width={48} height={48} decoding="async" />
         </button>
       </footer>
     </div>

@@ -12,22 +12,32 @@
       {
         "id": "mic",
         "object": "Microphone",
-        "text": "(TBD) The first time he stepped up to a mic…"
+        "text": "He remembers the first time he spoke into a microphone. His voice trembled—but the music didn't."
+      },
+      {
+        "id": "eyes",
+        "object": "Stage / crowd",
+        "text": "• on stage, he watches the crowd.\n• off stage, he needs them to watch him."
       },
       {
         "id": "console",
         "object": "Tamagotchi / game console",
-        "text": "(TBD) 8-bit games and childhood sound…"
+        "text": "Grew up playing 8bit console games like 'Super Clysdale Brothers' and 'Mega Mammoth,' and those chirping, buzzing, energetic soundtracks inspired him to want to make music of his own."
+      },
+      {
+        "id": "heart",
+        "object": "Broken heart",
+        "text": "He had a song he couldn't stop replaying after the breakup. It understood what he couldn't say out loud."
       },
       {
         "id": "guitar",
         "object": "Electric guitar",
-        "text": "(TBD) Teen years and the distortion knob…"
+        "text": "As a teenager, he spent hours turning the distortion knob all the way up, chasing the loudest, most overwhelming sound he could create. That was the first time he felt what music could do to a body."
       },
       {
-        "id": "crowd",
-        "object": "Stage / crowd",
-        "text": "(TBD) The crowd on stage vs. being watched…"
+        "id": "synth",
+        "object": "Synthesizer",
+        "text": "When he found his first synthesizer, he realized he didn't just want to play music—he wanted to build it."
       }
     ],
     "listeningHistory": [
