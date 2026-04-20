@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useGame } from '../context/GameContext.jsx';
 import closeImg from '../assets/ui/close.png';
 import playBtnImg from '../assets/ui/play-btn.png';
+import onBtnImg from '../assets/ui/on-btn.png';
 import { SONG_DETAIL_ART_BY_ID } from '../utils/songDetailArt.js';
 import { SONG_PREVIEW_AUDIO_BY_ID } from '../utils/songPreviewAudio.js';
 
@@ -91,7 +92,7 @@ export function SongDetailModal() {
         <div className="song-detail-actions">
           <button
             type="button"
-            className="modal-play-btn"
+            className={`modal-play-btn${previewPlaying ? ' is-playing' : ''}`}
             onClick={(e) => {
               e.stopPropagation();
               togglePreview();
@@ -101,7 +102,13 @@ export function SongDetailModal() {
             aria-label={previewPlaying ? 'Pause preview' : 'Play preview'}
             aria-pressed={previewPlaying}
           >
-            <img src={playBtnImg} alt="" width={72} height={72} decoding="async" />
+            <img
+              src={previewPlaying ? onBtnImg : playBtnImg}
+              alt=""
+              width={72}
+              height={72}
+              decoding="async"
+            />
           </button>
           <button type="button" className="modal-close-btn" onClick={close} aria-label="Close">
             <img src={closeImg} alt="" width={72} height={72} decoding="async" />
