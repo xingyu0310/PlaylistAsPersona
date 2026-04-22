@@ -13,7 +13,7 @@ export function HelpPanel() {
       onClick={() => dispatch({ type: 'CLOSE_HELP' })}
     >
       <div
-        className="modal sheet"
+        className="modal sheet help-sheet"
         role="dialog"
         aria-labelledby="help-title"
         onClick={(e) => e.stopPropagation()}
@@ -30,14 +30,28 @@ export function HelpPanel() {
           How to play
         </h2>
         <ol className="modal-list ordered">
-          <li>Use the left rail to switch characters.</li>
-          <li>Center: profile; tap &quot;learn more&quot; for objects &amp; stories.</li>
           <li>
-            Right: Listening History — tap a row to add/remove it from the Public Playlist (up to{' '}
-            {PLAYLIST_SIZE} tracks).
+            Use the <span className="kw">left rail</span> to switch characters.
           </li>
-          <li>Tap &quot;Details&quot; beside a song for extra info when available.</li>
-          <li>When full, Save; after every character is saved, tap Done.</li>
+          <li>
+            <span className="kw">Hover</span> the character portrait to read their assignment.
+          </li>
+          <li>
+            Center: <span className="kw">profile</span>; tap{' '}
+            <span className="kw">&quot;learn more&quot;</span> for objects &amp; stories.
+          </li>
+          <li>
+            Right: <span className="kw">Listening History</span> — tap a row to add/remove it from
+            the <span className="kw">Public Playlist</span> (up to {PLAYLIST_SIZE} tracks).
+          </li>
+          <li>
+            Tap <span className="kw">&quot;Details&quot;</span> beside a song for extra info when
+            available.
+          </li>
+          <li>
+            When full, <span className="kw">Save</span>; after every character is saved, tap{' '}
+            <span className="kw">Done</span>.
+          </li>
         </ol>
       </div>
     </div>

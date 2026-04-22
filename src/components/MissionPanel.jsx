@@ -13,7 +13,7 @@ export function MissionPanel() {
       onClick={() => dispatch({ type: 'CLOSE_MISSION' })}
     >
       <div
-        className="modal sheet"
+        className="modal sheet mission-sheet"
         role="dialog"
         aria-labelledby="mission-title"
         onClick={(e) => e.stopPropagation()}
@@ -26,17 +26,10 @@ export function MissionPanel() {
         >
           <img src={closeImg} alt="" width={72} height={72} decoding="async" />
         </button>
+
         <h2 id="mission-title" className="modal-title">
-          Your task
+          Progress
         </h2>
-        <ul className="modal-list">
-          <li>Browse each character&apos;s profile.</li>
-          <li>Read their object stories.</li>
-          <li>Check Listening History.</li>
-          <li>Pick {PLAYLIST_SIZE} songs per character for the Public Playlist.</li>
-          <li>Save every character, then tap Done to submit.</li>
-        </ul>
-        <h3 className="modal-sub">Progress</h3>
         <ul className="progress-list">
           {characters.map((c) => {
             const n = (state.selections[c.id] ?? []).length;
@@ -44,8 +37,9 @@ export function MissionPanel() {
             let label = 'Not started';
             if (saved) label = 'Saved';
             else if (n > 0) label = `${n}/${PLAYLIST_SIZE} selected`;
+            const isCurrent = c.id === state.currentCharacterId;
             return (
-              <li key={c.id}>
+              <li key={c.id} className={isCurrent ? 'is-current' : undefined}>
                 <strong>{c.name}</strong>
                 <span className="muted">{label}</span>
               </li>

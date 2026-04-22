@@ -8,6 +8,14 @@
     "avatar": "",
     "profileImage": "",
     "taskBlurb": "Flash Beat is an up-and-coming musician influencer on BurrowBeats. He often uses shared tracks to **shape his image** and **chase opportunities**. Pick **3** songs from his listening history for his **Public Playlist**.",
+    "assignment": {
+      "title": "Assignment: Build the Hype",
+      "body": [
+        "Flash Beat is an emerging music influencer on BurrowBeats.",
+        "He wants a public playlist that feels exciting, stylish, and impossible to ignore.",
+        "Read his clues and explore his listening history. Choose 3 songs he would feature to attract attention and shape his image."
+      ]
+    },
     "stories": [
       {
         "id": "mic",
@@ -91,7 +99,35 @@
     "avatar": "",
     "profileImage": "",
     "taskBlurb": "(TBD) Task description for this character.",
-    "stories": [{ "id": "sf1", "object": "(Item)", "text": "(TBD)" }],
+    "assignment": {
+      "title": "Assignment: Curate the Vibe",
+      "body": [
+        "Soft Frame sees music as part of her aesthetic world.",
+        "Read her clues and listening history, then select 3 songs that best match the image she wants others to see."
+      ]
+    },
+    "stories": [
+      {
+        "id": "opera",
+        "object": "Opera vampire figurine",
+        "text": "She still remembers the first musical that made her feel powerful in the dark.\nSince then, she has loved songs that feel larger than life."
+      },
+      {
+        "id": "palette",
+        "object": "Artist's palette",
+        "text": "As a visual arts student, she rarely looks at an album as sound alone.\nShe studies the colors, typography, and composition,\nsearching for clues about the world the music wants to create."
+      },
+      {
+        "id": "camera",
+        "object": "Camera",
+        "text": "She began carrying a camera because she was afraid ordinary moments would disappear too quickly.\nOver time, she learned to frame them carefully,\nturning everyday life into something worth keeping."
+      },
+      {
+        "id": "lightstick",
+        "object": "Lightstick",
+        "text": "At concerts, she lifts her lightstick with thousands of others,\nfeeling herself become part of something larger than her own voice."
+      }
+    ],
     "listeningHistory": [
       {
         "id": "sf_s1",
@@ -135,7 +171,35 @@
     "avatar": "",
     "profileImage": "",
     "taskBlurb": "(TBD) Task description for this character.",
-    "stories": [{ "id": "mm1", "object": "(Item)", "text": "(TBD)" }],
+    "assignment": {
+      "title": "Assignment: A Softer Introduction",
+      "body": [
+        "Marshmallow wants to share music that feels personal, but not too revealing.",
+        "Look through her clues and private listening history. Choose 3 songs she would feel comfortable placing in her public playlist."
+      ]
+    },
+    "stories": [
+      {
+        "id": "yarn",
+        "object": "Ball of yarn",
+        "text": "In her spare time, she knits small sweaters from her own wool.\nIt is her quiet way of turning softness into something that can last."
+      },
+      {
+        "id": "pillow",
+        "object": "Pillow",
+        "text": "On rainy days, she disappears into her pillow,\nletting soft dreams and slower thoughts carry her somewhere gentler."
+      },
+      {
+        "id": "metro",
+        "object": "Metro card",
+        "text": "Her ride home is long. On the train, she listens quietly,\nsaving her softer songs for the window, and faster ones for the days she needs a little lift."
+      },
+      {
+        "id": "tarot",
+        "object": "Tarot card",
+        "text": "She does not always trust fortune tellers,\nbut she has learned that the heart often notices what the mind has yet to name."
+      }
+    ],
     "listeningHistory": [
       {
         "id": "mm_s1",

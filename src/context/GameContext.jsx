@@ -26,6 +26,7 @@ const initialState = {
   songDetailId: null,
   songDetailCharacterId: null,
   result: null,
+  endingCharacterId: null,
   toast: null,
 };
 
@@ -74,7 +75,16 @@ function gameReducer(state, action) {
       return {
         ...state,
         saved: { ...state.saved, [id]: true },
-        toast: 'Saved.',
+        endingCharacterId: id,
+        page: 'characterEnding',
+        toast: null,
+      };
+    }
+    case 'CONTINUE_FROM_CHARACTER_ENDING': {
+      return {
+        ...state,
+        page: 'gameplay',
+        endingCharacterId: null,
       };
     }
     case 'OPEN_MISSION':
@@ -105,7 +115,7 @@ function gameReducer(state, action) {
       const result = computeResult(CHARACTERS, state.selections);
       return {
         ...state,
-        page: 'result',
+        page: 'finalEnding',
         result,
         toast: null,
       };

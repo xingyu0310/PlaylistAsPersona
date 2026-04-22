@@ -3,7 +3,8 @@ import { StartScreen } from './screens/StartScreen.jsx';
 import { IntroScreen } from './screens/IntroScreen.jsx';
 import { TutorialScreen } from './screens/TutorialScreen.jsx';
 import { GameplayScreen } from './screens/GameplayScreen.jsx';
-import { ResultScreen } from './screens/ResultScreen.jsx';
+import { CharacterEndingScreen } from './screens/CharacterEndingScreen.jsx';
+import { FinalEndingScreen } from './screens/FinalEndingScreen.jsx';
 
 export default function App() {
   const { state } = useGame();
@@ -17,8 +18,10 @@ export default function App() {
       return <TutorialScreen />;
     case 'gameplay':
       return <GameplayScreen />;
-    case 'result':
-      return <ResultScreen />;
+    case 'characterEnding':
+      return <CharacterEndingScreen />;
+    case 'finalEnding':
+      return <FinalEndingScreen />;
     default:
       return <StartScreen />;
   }

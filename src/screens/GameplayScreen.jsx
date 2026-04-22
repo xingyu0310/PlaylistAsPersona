@@ -11,7 +11,7 @@ import { Toast } from '../components/Toast.jsx';
 import { MissionPanel } from '../components/MissionPanel.jsx';
 import { HelpPanel } from '../components/HelpPanel.jsx';
 import { SongDetailModal } from '../components/SongDetailModal.jsx';
-import { FLASHBEAT_STORY_OBJECT_BY_ID } from '../utils/flashbeatStoryObjects.js';
+import { STORY_OBJECT_BY_CHARACTER } from '../utils/storyObjects.js';
 
 function songById(character, id) {
   return character.listeningHistory.find((s) => s.id === id);
@@ -35,7 +35,7 @@ export function GameplayScreen() {
         <button
           type="button"
           className="btn-icon btn-icon--asset"
-          aria-label="Mission list"
+          aria-label="Progress"
           onClick={() => dispatch({ type: 'OPEN_MISSION' })}
         >
           <img src={taskBtnImg} alt="" width={48} height={48} decoding="async" />
@@ -87,29 +87,41 @@ export function GameplayScreen() {
           <div className="panel-tab">{currentCharacter.name}&apos;s Profile</div>
           {!inStory ? (
             <>
-              <button
-                type="button"
-                className="link-learn"
-                onClick={() => dispatch({ type: 'SET_STORY', value: true })}
-                aria-label="Learn more — objects and stories"
-              >
-                <span className="link-learn__text">learn more</span>
-                <img
-                  src={nextImg}
-                  alt=""
-                  className="link-learn__img"
-                  width={80}
-                  height={80}
-                  decoding="async"
-                />
-              </button>
               <div className="profile-layout">
-                <div className="profile-art">
+                <div
+                  className="profile-art"
+                  tabIndex={0}
+                  aria-label={
+                    currentCharacter.assignment?.title
+                      ? `${currentCharacter.name} — hover for ${currentCharacter.assignment.title}`
+                      : `${currentCharacter.name} portrait`
+                  }
+                >
                   {currentCharacter.profileImage ? (
                     <img src={currentCharacter.profileImage} alt="" />
                   ) : (
                     <span className="art-placeholder">Art placeholder</span>
                   )}
+                  {currentCharacter.assignment ? (
+                    <span className="profile-art-hint" aria-hidden="true">
+                      Hover for task
+                    </span>
+                  ) : null}
+                  {currentCharacter.assignment ? (
+                    <div className="assignment-peek" role="tooltip">
+                      <h3 className="assignment-peek-title">
+                        {currentCharacter.assignment.title}
+                      </h3>
+                      {(Array.isArray(currentCharacter.assignment.body)
+                        ? currentCharacter.assignment.body
+                        : [currentCharacter.assignment.body]
+                      ).map((p, i) => (
+                        <p key={i} className="assignment-peek-body">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="profile-main-col">
                   <div className="profile-fields" data-character-id={currentCharacter.id}>
@@ -126,6 +138,22 @@ export function GameplayScreen() {
                       <p className="tagline">{currentCharacter.tagline}</p>
                     ) : null}
                   </div>
+                  <button
+                    type="button"
+                    className="link-learn"
+                    onClick={() => dispatch({ type: 'SET_STORY', value: true })}
+                    aria-label="Learn more — objects and stories"
+                  >
+                    <span className="link-learn__text">learn more</span>
+                    <img
+                      src={nextImg}
+                      alt=""
+                      className="link-learn__img"
+                      width={80}
+                      height={80}
+                      decoding="async"
+                    />
+                  </button>
                   <section className="public-pl">
                     <h2 className="subheading">Public Playlist</h2>
                     <ul className="slots">
@@ -170,50 +198,59 @@ export function GameplayScreen() {
                 <img src={backImg} alt="" width={80} height={80} decoding="async" />
               </button>
               <h2 className="subheading">Objects &amp; stories</h2>
-              {currentCharacter.id === 'flashbeat' ? (
-                <ul className="story-grid story-grid--flashbeat">
-                  {(currentCharacter.stories || []).map((s, i) => {
-                    const art = FLASHBEAT_STORY_OBJECT_BY_ID[s.id];
-                    const iconRight = i % 2 === 1;
-                    return (
-                      <li
-                        key={s.id}
-                        className={`story-row ${iconRight ? 'story-row--icon-right' : 'story-row--icon-left'}`}
-                      >
-                        {art ? (
-                          <img
-                            className="story-object-img"
-                            src={art}
-                            alt=""
-                            width={64}
-                            height={64}
-                            decoding="async"
-                          />
-                        ) : null}
-                        <div className="story-bubble">
-                          <p className="story-text">
-                            {s.text.split('\n').map((line, j, arr) => (
-                              <span key={j}>
-                                {line}
-                                {j < arr.length - 1 ? <br /> : null}
-                              </span>
-                            ))}
-                          </p>
-                        </div>
+              {(() => {
+                const artMap = STORY_OBJECT_BY_CHARACTER[currentCharacter.id];
+                const hasArt =
+                  artMap &&
+                  (currentCharacter.stories || []).some((s) => artMap[s.id]);
+                if (hasArt) {
+                  return (
+                    <ul className={`story-grid story-grid--${currentCharacter.id}`}>
+                      {(currentCharacter.stories || []).map((s, i) => {
+                        const art = artMap[s.id];
+                        const iconRight = i % 2 === 1;
+                        return (
+                          <li
+                            key={s.id}
+                            className={`story-row ${iconRight ? 'story-row--icon-right' : 'story-row--icon-left'}`}
+                          >
+                            {art ? (
+                              <img
+                                className="story-object-img"
+                                src={art}
+                                alt=""
+                                width={64}
+                                height={64}
+                                decoding="async"
+                              />
+                            ) : null}
+                            <div className="story-bubble">
+                              <p className="story-text">
+                                {s.text.split('\n').map((line, j, arr) => (
+                                  <span key={j}>
+                                    {line}
+                                    {j < arr.length - 1 ? <br /> : null}
+                                  </span>
+                                ))}
+                              </p>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  );
+                }
+                return (
+                  <ul className="story-grid">
+                    {(currentCharacter.stories?.length ? currentCharacter.stories : []).map((s) => (
+                      <li key={s.id} className="story-card">
+                        <span className="story-obj">{s.object}</span>
+                        <p>{s.text}</p>
                       </li>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <ul className="story-grid">
-                  {(currentCharacter.stories?.length ? currentCharacter.stories : []).map((s) => (
-                    <li key={s.id} className="story-card">
-                      <span className="story-obj">{s.object}</span>
-                      <p>{s.text}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                    ))}
+                  </ul>
+                );
+              })()}
               {(!currentCharacter.stories || currentCharacter.stories.length === 0) && (
                 <p className="muted">(Add stories in the stories array in characters.json.)</p>
               )}
