@@ -3,7 +3,7 @@ import { PLAYLIST_SIZE } from '../constants.js';
 import closeImg from '../assets/ui/close.png';
 
 export function HelpPanel() {
-  const { state, dispatch } = useGame();
+  const { state, dispatch, t } = useGame();
   if (!state.helpOpen) return null;
 
   return (
@@ -22,35 +22,48 @@ export function HelpPanel() {
           type="button"
           className="modal-close-btn"
           onClick={() => dispatch({ type: 'CLOSE_HELP' })}
-          aria-label="Close"
+          aria-label={t('ui.close')}
         >
           <img src={closeImg} alt="" width={72} height={72} decoding="async" />
         </button>
         <h2 id="help-title" className="modal-title">
-          How to play
+          {t('help.title')}
         </h2>
         <ol className="modal-list ordered">
           <li>
-            Use the <span className="kw">left rail</span> to switch characters.
+            {t('help.0a')}
+            <span className="kw">{t('help.0b')}</span>
+            {t('help.0c')}
           </li>
           <li>
-            <span className="kw">Hover</span> the character portrait to read their assignment.
+            <span className="kw">{t('help.1a')}</span>
+            {t('help.1b')}
           </li>
           <li>
-            Center: <span className="kw">profile</span>; tap{' '}
-            <span className="kw">&quot;learn more&quot;</span> for objects &amp; stories.
+            {t('help.2a')}
+            <span className="kw">{t('help.2b')}</span>
+            {t('help.2c')}
+            <span className="kw lang-en-inline">{t('help.2d')}</span>
+            {t('help.2e')}
           </li>
           <li>
-            Right: <span className="kw">Listening History</span> — tap a row to add/remove it from
-            the <span className="kw">Public Playlist</span> (up to {PLAYLIST_SIZE} tracks).
+            {t('help.3a')}
+            <span className="kw lang-en-inline">{t('help.3b')}</span>
+            {t('help.3c')}
+            <span className="kw lang-en-inline">{t('help.3d')}</span>
+            {t('help.3e', { n: PLAYLIST_SIZE })}
           </li>
           <li>
-            Tap <span className="kw">&quot;Details&quot;</span> beside a song for extra info when
-            available.
+            {t('help.4a')}
+            <span className="kw lang-en-inline">{t('help.4b')}</span>
+            {t('help.4c')}
           </li>
           <li>
-            When full, <span className="kw">Save</span>; after every character is saved, tap{' '}
-            <span className="kw">Done</span>.
+            {t('help.5a')}
+            <span className="kw">{t('help.5b')}</span>
+            {t('help.5c')}
+            <span className="kw">{t('help.5d')}</span>
+            {t('help.5e')}
           </li>
         </ol>
       </div>

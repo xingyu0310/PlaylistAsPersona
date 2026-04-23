@@ -1,8 +1,9 @@
 import { useGame } from '../context/GameContext.jsx';
 import { getCharacterEnding } from '../utils/endings.js';
+import LanguageToggle from '../components/LanguageToggle.jsx';
 
 export function CharacterEndingScreen() {
-  const { state, dispatch, characters, playlistSize } = useGame();
+  const { state, dispatch, characters, playlistSize, t, pick } = useGame();
   const character =
     characters.find((c) => c.id === state.endingCharacterId) ?? null;
 
@@ -19,27 +20,36 @@ export function CharacterEndingScreen() {
 
   const ending = character ? getCharacterEnding(character.id, selectedIds) : null;
   const endingParagraphs = ending
-    ? Array.isArray(ending.description)
-      ? ending.description
-      : [ending.description]
+    ? (() => {
+        const desc = pick(ending.description);
+        if (Array.isArray(desc)) return desc;
+        if (typeof desc === 'string') return [desc];
+        return [];
+      })()
     : [];
+
+  const fallbackName =
+    character?.name ?? t('charEnding.placeholderFallbackName');
 
   return (
     <div className="screen screen-character-ending">
+      <LanguageToggle className="lang-toggle--floating" />
       <div className="ending-inner">
         <p className="ending-eyebrow">
-          Character ending {savedCount} / {totalCount}
+          {t('charEnding.eyebrow', { saved: savedCount, total: totalCount })}
         </p>
         <h1 className="title-lg">
-          {character ? `${character.name}'s ending` : 'Character ending'}
+          {character
+            ? t('charEnding.title', { name: character.name })
+            : t('charEnding.titleFallback')}
         </h1>
 
         {ending ? (
           <section className="ending-card ending-result" data-ending-id={ending.id}>
             {ending.subtitle ? (
-              <p className="ending-tag">{ending.subtitle}</p>
+              <p className="ending-tag">{pick(ending.subtitle)}</p>
             ) : null}
-            <h2 className="ending-title">{ending.title}</h2>
+            <h2 className="ending-title">{pick(ending.title)}</h2>
             {endingParagraphs.map((p, i) => (
               <p key={i} className="ending-body">
                 {p}
@@ -47,37 +57,36 @@ export function CharacterEndingScreen() {
             ))}
           </section>
         ) : (
-          /* TODO: 其他角色的结局文案待填充 */
           <section className="ending-card ending-placeholder">
-            <h2>Ending (placeholder)</h2>
+            <h2>{t('charEnding.placeholderTitle')}</h2>
             <p className="muted">
-              (TBD) A short ending for {character?.name ?? 'this character'} based
-              on the public playlist you crafted. Replace this block with the real
-              narrative copy later.
+              {t('charEnding.placeholderBody', { name: fallbackName })}
             </p>
           </section>
         )}
 
         <section className="ending-card">
-          <h2>Your Public Playlist for {character?.name ?? '—'}</h2>
+          <h2>{t('charEnding.yourPlaylist', { name: fallbackName })}</h2>
           {selectedSongs.length ? (
             <ul className="ending-songs">
               {selectedSongs.map((song) => (
                 <li key={song.id}>
-                  <span className="song-name">{song.title}</span>
-                  {song.time ? <span className="time">{song.time}</span> : null}
+                  <span className="song-name lang-en-inline">{song.title}</span>
+                  {song.time ? (
+                    <span className="time lang-en-inline">{song.time}</span>
+                  ) : null}
                 </li>
               ))}
               {Array.from({ length: Math.max(0, playlistSize - selectedSongs.length) }).map(
                 (_, i) => (
                   <li key={`empty-${i}`} className="muted">
-                    Empty slot
+                    {t('charEnding.emptySlot')}
                   </li>
                 ),
               )}
             </ul>
           ) : (
-            <p className="muted">No songs selected.</p>
+            <p className="muted">{t('charEnding.noSongs')}</p>
           )}
         </section>
 
@@ -87,7 +96,7 @@ export function CharacterEndingScreen() {
             className="btn btn-save"
             onClick={() => dispatch({ type: 'CONTINUE_FROM_CHARACTER_ENDING' })}
           >
-            {allSaved ? 'Back to gameplay' : 'Continue'}
+            {allSaved ? t('charEnding.backToGameplay') : t('charEnding.continue')}
           </button>
           {allSaved ? (
             <button
@@ -95,7 +104,7 @@ export function CharacterEndingScreen() {
               className="btn btn-done"
               onClick={() => dispatch({ type: 'SUBMIT' })}
             >
-              See final ending
+              {t('charEnding.seeFinal')}
             </button>
           ) : null}
         </div>

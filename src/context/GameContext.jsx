@@ -9,6 +9,26 @@ import React, {
 import { loadCharacters } from '../utils/loadCharacters.js';
 import { computeResult } from '../utils/computeResult.js';
 import { PLAYLIST_SIZE } from '../constants.js';
+import {
+  translate,
+  pickLocalized,
+  SUPPORTED_LANGUAGES,
+} from '../i18n/strings.js';
+
+const LANG_STORAGE_KEY = 'bb.lang';
+
+function detectInitialLanguage() {
+  if (typeof window === 'undefined') return 'en';
+  try {
+    const saved = window.localStorage.getItem(LANG_STORAGE_KEY);
+    if (saved && SUPPORTED_LANGUAGES.includes(saved)) return saved;
+  } catch (_) {
+    /* ignore */
+  }
+  const nav = (window.navigator?.language || '').toLowerCase();
+  if (nav.startsWith('zh')) return 'zh';
+  return 'en';
+}
 
 const GameContext = createContext(null);
 
@@ -28,6 +48,7 @@ const initialState = {
   result: null,
   endingCharacterId: null,
   toast: null,
+  language: 'en',
 };
 
 function gameReducer(state, action) {
@@ -54,7 +75,7 @@ function gameReducer(state, action) {
       if (idx >= 0) {
         nextList = cur.filter((id) => id !== songId);
       } else if (cur.length >= PLAYLIST_SIZE) {
-        return { ...state, toast: 'You can add at most 3 songs.' };
+        return { ...state, toast: { key: 'toast.maxSongs' } };
       } else {
         nextList = [...cur, songId];
       }
@@ -70,7 +91,7 @@ function gameReducer(state, action) {
       if (!id) return state;
       const sel = state.selections[id] ?? [];
       if (sel.length < PLAYLIST_SIZE) {
-        return { ...state, toast: 'Please select 3 songs before saving.' };
+        return { ...state, toast: { key: 'toast.saveFirst' } };
       }
       return {
         ...state,
@@ -109,7 +130,7 @@ function gameReducer(state, action) {
         const names = incomplete.map((c) => c.name).join(', ');
         return {
           ...state,
-          toast: `Save these characters first: ${names}`,
+          toast: { key: 'toast.unsaved', vars: { names } },
         };
       }
       const result = computeResult(CHARACTERS, state.selections);
@@ -125,26 +146,49 @@ function gameReducer(state, action) {
         ...initialState,
         currentCharacterId: FIRST_ID,
         page: 'start',
+        language: state.language,
       };
     case 'BACK_TO_START':
       return {
         ...initialState,
         currentCharacterId: FIRST_ID,
         page: 'start',
+        language: state.language,
       };
+    case 'SET_LANGUAGE': {
+      if (!SUPPORTED_LANGUAGES.includes(action.language)) return state;
+      return { ...state, language: action.language };
+    }
+    case 'TOGGLE_LANGUAGE': {
+      const next = state.language === 'en' ? 'zh' : 'en';
+      return { ...state, language: next };
+    }
     default:
       return state;
   }
 }
 
 export function GameProvider({ children }) {
-  const [state, dispatch] = useReducer(gameReducer, initialState);
+  const [state, dispatch] = useReducer(gameReducer, initialState, (base) => ({
+    ...base,
+    language: detectInitialLanguage(),
+  }));
 
   useEffect(() => {
     if (!state.toast) return;
     const t = setTimeout(() => dispatch({ type: 'CLEAR_TOAST' }), 2200);
     return () => clearTimeout(t);
   }, [state.toast]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.documentElement.lang = state.language;
+    try {
+      window.localStorage.setItem(LANG_STORAGE_KEY, state.language);
+    } catch (_) {
+      /* ignore */
+    }
+  }, [state.language]);
 
   const currentCharacter = useMemo(
     () => CHARACTERS.find((c) => c.id === state.currentCharacterId) ?? null,
@@ -160,6 +204,24 @@ export function GameProvider({ children }) {
     dispatch({ type: 'NAVIGATE', page, extra });
   }, []);
 
+  const setLanguage = useCallback((lang) => {
+    dispatch({ type: 'SET_LANGUAGE', language: lang });
+  }, []);
+
+  const toggleLanguage = useCallback(() => {
+    dispatch({ type: 'TOGGLE_LANGUAGE' });
+  }, []);
+
+  const t = useCallback(
+    (key, vars) => translate(state.language, key, vars),
+    [state.language]
+  );
+
+  const pick = useCallback(
+    (value) => pickLocalized(value, state.language),
+    [state.language]
+  );
+
   const value = useMemo(
     () => ({
       characters: CHARACTERS,
@@ -169,8 +231,22 @@ export function GameProvider({ children }) {
       selectedIds,
       playlistSize: PLAYLIST_SIZE,
       navigate,
+      language: state.language,
+      setLanguage,
+      toggleLanguage,
+      t,
+      pick,
     }),
-    [state, currentCharacter, selectedIds, navigate]
+    [
+      state,
+      currentCharacter,
+      selectedIds,
+      navigate,
+      setLanguage,
+      toggleLanguage,
+      t,
+      pick,
+    ]
   );
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

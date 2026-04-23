@@ -5,7 +5,7 @@ import artSignal from '../assets/songs/Signal in Control.png';
 import artNeon from '../assets/songs/Neon Drop Theory.png';
 
 import artGloss from '../assets/songs/Gloss on the Window.png';
-import artLightstick from '../assets/songs/Lightstick Galaxy.png';
+import artSeventeenMirrors from '../assets/songs/Seventeen Mirrors.png';
 import artCherry from '../assets/songs/Cherry Lip Gloss Theory.png';
 import artVelvet from '../assets/songs/Velvet Polaroid.png';
 import artCurtain from '../assets/songs/Curtain Call in My Bedroom.png';
@@ -25,7 +25,7 @@ export const SONG_DETAIL_ART_BY_ID = {
   song_neon: artNeon,
 
   sf_s1: artGloss,
-  sf_s2: artLightstick,
+  sf_s2: artSeventeenMirrors,
   sf_s3: artCherry,
   sf_s4: artVelvet,
   sf_s5: artCurtain,

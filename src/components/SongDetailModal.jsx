@@ -9,7 +9,7 @@ import { SONG_PREVIEW_AUDIO_BY_ID } from '../utils/songPreviewAudio.js';
 const PREVIEW_MAX_SECONDS = 15;
 
 export function SongDetailModal() {
-  const { state, dispatch, characters } = useGame();
+  const { state, dispatch, characters, t, pick } = useGame();
   const { songDetailId, songDetailCharacterId } = state;
   const audioRef = useRef(null);
   const [previewPlaying, setPreviewPlaying] = useState(false);
@@ -98,8 +98,12 @@ export function SongDetailModal() {
               togglePreview();
             }}
             disabled={!previewUrl}
-            title={previewUrl ? undefined : 'Preview audio not added yet'}
-            aria-label={previewPlaying ? 'Pause preview' : 'Play preview'}
+            title={previewUrl ? undefined : t('song.preview.unavailable')}
+            aria-label={
+              previewPlaying
+                ? t('song.preview.pause.aria')
+                : t('song.preview.play.aria')
+            }
             aria-pressed={previewPlaying}
           >
             <img
@@ -110,7 +114,12 @@ export function SongDetailModal() {
               decoding="async"
             />
           </button>
-          <button type="button" className="modal-close-btn" onClick={close} aria-label="Close">
+          <button
+            type="button"
+            className="modal-close-btn"
+            onClick={close}
+            aria-label={t('ui.close')}
+          >
             <img src={closeImg} alt="" width={72} height={72} decoding="async" />
           </button>
         </div>
@@ -118,14 +127,16 @@ export function SongDetailModal() {
           <img
             className="song-detail-art"
             src={detailArt}
-            alt={`${song.title} — detail`}
+            alt={t('song.detailAlt', { title: song.title })}
             decoding="async"
           />
         ) : (
           <>
             {song.playCount != null && (
               <p className="play-count">
-                Played <strong>{song.playCount}</strong> times
+                {t('song.playCountLine.a')}
+                <strong>{song.playCount}</strong>
+                {t('song.playCountLine.b')}
               </p>
             )}
             <div className="song-detail-top">
@@ -133,15 +144,15 @@ export function SongDetailModal() {
                 {song.albumArt ? (
                   <img src={song.albumArt} alt="" />
                 ) : (
-                  <span>Cover placeholder</span>
+                  <span>{t('song.coverPlaceholder')}</span>
                 )}
               </div>
               <div>
-                <h3 className="song-title">{song.title}</h3>
+                <h3 className="song-title lang-en-inline">{song.title}</h3>
                 {(song.artist || song.artistHandle) && (
                   <p className="artist-line">
-                    Artist{' '}
-                    <span className="handle">
+                    <span className="lang-en-inline">{t('song.artist')}</span>{' '}
+                    <span className="handle lang-en-inline">
                       {song.artistHandle || `@${song.artist}`}
                     </span>
                   </p>
@@ -149,30 +160,32 @@ export function SongDetailModal() {
               </div>
             </div>
             {song.tags?.length ? (
-              <div className="tags">
-                {song.tags.map((t) => (
-                  <span key={t} className="tag">
-                    {t}
+              <div className="tags lang-en-inline">
+                {song.tags.map((tag) => (
+                  <span key={tag} className="tag">
+                    {tag}
                   </span>
                 ))}
               </div>
             ) : null}
-            {song.description ? (
+            {pick(song.description) ? (
               <>
-                <h4 className="detail-heading">Description</h4>
-                <p className="detail-body">{song.description}</p>
+                <h4 className="detail-heading">{t('song.description')}</h4>
+                <p className="detail-body">{pick(song.description)}</p>
               </>
             ) : null}
             {song.genre ? (
               <>
-                <h4 className="detail-heading">Genre</h4>
-                <p className="detail-body">{song.genre}</p>
+                <h4 className="detail-heading">{t('song.genre')}</h4>
+                <p className="detail-body lang-en-inline">{song.genre}</p>
               </>
             ) : null}
             {song.lyricsFragment ? (
               <>
-                <h4 className="detail-heading">Lyrics fragment</h4>
-                <blockquote className="lyrics">{song.lyricsFragment}</blockquote>
+                <h4 className="detail-heading">{t('song.lyrics')}</h4>
+                <blockquote className="lyrics lang-en-inline">
+                  {song.lyricsFragment}
+                </blockquote>
               </>
             ) : null}
           </>

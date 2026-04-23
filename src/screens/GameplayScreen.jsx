@@ -11,6 +11,7 @@ import { Toast } from '../components/Toast.jsx';
 import { MissionPanel } from '../components/MissionPanel.jsx';
 import { HelpPanel } from '../components/HelpPanel.jsx';
 import { SongDetailModal } from '../components/SongDetailModal.jsx';
+import LanguageToggle from '../components/LanguageToggle.jsx';
 import { STORY_OBJECT_BY_CHARACTER } from '../utils/storyObjects.js';
 
 function songById(character, id) {
@@ -18,11 +19,32 @@ function songById(character, id) {
 }
 
 export function GameplayScreen() {
-  const { state, dispatch, characters, currentCharacter, selectedIds, playlistSize } = useGame();
+  const {
+    state,
+    dispatch,
+    characters,
+    currentCharacter,
+    selectedIds,
+    playlistSize,
+    t,
+    pick,
+  } = useGame();
   if (!currentCharacter) return null;
 
   const inStory = state.storyMode;
   const tornProfile = !!currentCharacter.profilePanelBg;
+  const assignmentTitle = currentCharacter.assignment
+    ? pick(currentCharacter.assignment.title)
+    : '';
+  const assignmentBody = currentCharacter.assignment
+    ? (() => {
+        const body = pick(currentCharacter.assignment.body);
+        if (Array.isArray(body)) return body;
+        if (typeof body === 'string') return [body];
+        return [];
+      })()
+    : [];
+  const tagline = currentCharacter.tagline ? pick(currentCharacter.tagline) : '';
 
   return (
     <div className="screen screen-gameplay">
@@ -35,28 +57,31 @@ export function GameplayScreen() {
         <button
           type="button"
           className="btn-icon btn-icon--asset"
-          aria-label="Progress"
+          aria-label={t('gameplay.progress')}
           onClick={() => dispatch({ type: 'OPEN_MISSION' })}
         >
           <img src={taskBtnImg} alt="" width={48} height={48} decoding="async" />
         </button>
         <div className="game-title-wrap">
           <img src={note2Img} alt="" className="game-deco game-deco--l" width={32} height={32} />
-          <h1 className="game-title">BurrowBeats</h1>
+          <h1 className="game-title">{t('gameplay.title')}</h1>
           <img src={noteImg} alt="" className="game-deco game-deco--r" width={32} height={32} />
         </div>
-        <button
-          type="button"
-          className="btn-icon btn-icon--asset"
-          aria-label="How to play"
-          onClick={() => dispatch({ type: 'OPEN_HELP' })}
-        >
-          <img src={helpBtnImg} alt="" width={48} height={48} decoding="async" />
-        </button>
+        <div className="game-header-right">
+          <LanguageToggle className="lang-toggle--inline" />
+          <button
+            type="button"
+            className="btn-icon btn-icon--asset"
+            aria-label={t('gameplay.howToPlay')}
+            onClick={() => dispatch({ type: 'OPEN_HELP' })}
+          >
+            <img src={helpBtnImg} alt="" width={48} height={48} decoding="async" />
+          </button>
+        </div>
       </header>
 
       <div className="game-columns">
-        <aside className="char-rail" aria-label="Switch character">
+        <aside className="char-rail" aria-label={t('gameplay.rail.aria')}>
           {characters.map((c) => {
             const active = c.id === state.currentCharacterId;
             const saved = !!state.saved[c.id];
@@ -67,6 +92,11 @@ export function GameplayScreen() {
                 className={`char-tab ${active ? 'active' : ''}`}
                 onClick={() => dispatch({ type: 'SET_CHARACTER', id: c.id })}
                 title={c.name}
+                aria-label={
+                  saved
+                    ? t('gameplay.charSaved.aria', { name: c.name })
+                    : t('gameplay.charTab.aria', { name: c.name })
+                }
               >
                 <span className="char-avatar">
                   {c.avatar ? <img src={c.avatar} alt="" /> : c.name.slice(0, 1)}
@@ -84,7 +114,9 @@ export function GameplayScreen() {
               : undefined
           }
         >
-          <div className="panel-tab">{currentCharacter.name}&apos;s Profile</div>
+          <div className="panel-tab">
+            {t('gameplay.profileTab', { name: currentCharacter.name })}
+          </div>
           {!inStory ? (
             <>
               <div className="profile-layout">
@@ -92,30 +124,27 @@ export function GameplayScreen() {
                   className="profile-art"
                   tabIndex={0}
                   aria-label={
-                    currentCharacter.assignment?.title
-                      ? `${currentCharacter.name} — hover for ${currentCharacter.assignment.title}`
-                      : `${currentCharacter.name} portrait`
+                    assignmentTitle
+                      ? `${currentCharacter.name} — ${assignmentTitle}`
+                      : currentCharacter.name
                   }
                 >
                   {currentCharacter.profileImage ? (
                     <img src={currentCharacter.profileImage} alt="" />
                   ) : (
-                    <span className="art-placeholder">Art placeholder</span>
+                    <span className="art-placeholder">
+                      {t('gameplay.artPlaceholder')}
+                    </span>
                   )}
                   {currentCharacter.assignment ? (
                     <span className="profile-art-hint" aria-hidden="true">
-                      Hover for task
+                      {t('gameplay.hoverForTask')}
                     </span>
                   ) : null}
                   {currentCharacter.assignment ? (
                     <div className="assignment-peek" role="tooltip">
-                      <h3 className="assignment-peek-title">
-                        {currentCharacter.assignment.title}
-                      </h3>
-                      {(Array.isArray(currentCharacter.assignment.body)
-                        ? currentCharacter.assignment.body
-                        : [currentCharacter.assignment.body]
-                      ).map((p, i) => (
+                      <h3 className="assignment-peek-title">{assignmentTitle}</h3>
+                      {assignmentBody.map((p, i) => (
                         <p key={i} className="assignment-peek-body">
                           {p}
                         </p>
@@ -126,25 +155,26 @@ export function GameplayScreen() {
                 <div className="profile-main-col">
                   <div className="profile-fields" data-character-id={currentCharacter.id}>
                     <p>
-                      <span className="label">Name</span> {currentCharacter.name}
+                      <span className="label">{t('gameplay.fields.name')}</span>{' '}
+                      <span className="lang-en-inline">{currentCharacter.name}</span>
                     </p>
                     <p>
-                      <span className="label">Profession</span> {currentCharacter.profession}
+                      <span className="label">{t('gameplay.fields.profession')}</span>{' '}
+                      <span className="lang-en-inline">{currentCharacter.profession}</span>
                     </p>
                     <p>
-                      <span className="label">MBTI</span> {currentCharacter.mbti}
+                      <span className="label">{t('gameplay.fields.mbti')}</span>{' '}
+                      <span className="lang-en-inline">{currentCharacter.mbti}</span>
                     </p>
-                    {currentCharacter.tagline ? (
-                      <p className="tagline">{currentCharacter.tagline}</p>
-                    ) : null}
+                    {tagline ? <p className="tagline">{tagline}</p> : null}
                   </div>
                   <button
                     type="button"
                     className="link-learn"
                     onClick={() => dispatch({ type: 'SET_STORY', value: true })}
-                    aria-label="Learn more — objects and stories"
+                    aria-label={t('gameplay.learnMore.aria')}
                   >
-                    <span className="link-learn__text">learn more</span>
+                    <span className="link-learn__text">{t('gameplay.learnMore')}</span>
                     <img
                       src={nextImg}
                       alt=""
@@ -155,7 +185,7 @@ export function GameplayScreen() {
                     />
                   </button>
                   <section className="public-pl">
-                    <h2 className="subheading">Public Playlist</h2>
+                    <h2 className="subheading">{t('gameplay.publicPlaylist')}</h2>
                     <ul className="slots">
                       {Array.from({ length: playlistSize }).map((_, i) => {
                         const id = selectedIds[i];
@@ -165,7 +195,7 @@ export function GameplayScreen() {
                             {song ? (
                               <button
                                 type="button"
-                                className="slot-fill"
+                                className="slot-fill lang-en-inline"
                                 onClick={() =>
                                   dispatch({
                                     type: 'TOGGLE_SONG',
@@ -177,7 +207,7 @@ export function GameplayScreen() {
                                 {song.title}
                               </button>
                             ) : (
-                              <span className="slot-empty">Empty slot</span>
+                              <span className="slot-empty">{t('gameplay.emptySlot')}</span>
                             )}
                           </li>
                         );
@@ -193,11 +223,11 @@ export function GameplayScreen() {
                 type="button"
                 className="btn-back"
                 onClick={() => dispatch({ type: 'SET_STORY', value: false })}
-                aria-label="Back to profile"
+                aria-label={t('gameplay.backToProfile.aria')}
               >
                 <img src={backImg} alt="" width={80} height={80} decoding="async" />
               </button>
-              <h2 className="subheading">Objects &amp; stories</h2>
+              <h2 className="subheading">{t('gameplay.objectsAndStories')}</h2>
               {(() => {
                 const artMap = STORY_OBJECT_BY_CHARACTER[currentCharacter.id];
                 const hasArt =
@@ -209,6 +239,7 @@ export function GameplayScreen() {
                       {(currentCharacter.stories || []).map((s, i) => {
                         const art = artMap[s.id];
                         const iconRight = i % 2 === 1;
+                        const storyText = pick(s.text) || '';
                         return (
                           <li
                             key={s.id}
@@ -226,7 +257,7 @@ export function GameplayScreen() {
                             ) : null}
                             <div className="story-bubble">
                               <p className="story-text">
-                                {s.text.split('\n').map((line, j, arr) => (
+                                {storyText.split('\n').map((line, j, arr) => (
                                   <span key={j}>
                                     {line}
                                     {j < arr.length - 1 ? <br /> : null}
@@ -244,15 +275,15 @@ export function GameplayScreen() {
                   <ul className="story-grid">
                     {(currentCharacter.stories?.length ? currentCharacter.stories : []).map((s) => (
                       <li key={s.id} className="story-card">
-                        <span className="story-obj">{s.object}</span>
-                        <p>{s.text}</p>
+                        <span className="story-obj">{pick(s.object)}</span>
+                        <p>{pick(s.text)}</p>
                       </li>
                     ))}
                   </ul>
                 );
               })()}
               {(!currentCharacter.stories || currentCharacter.stories.length === 0) && (
-                <p className="muted">(Add stories in the stories array in characters.json.)</p>
+                <p className="muted">{t('gameplay.storiesEmptyHint')}</p>
               )}
             </div>
           )}
@@ -262,7 +293,7 @@ export function GameplayScreen() {
           aria-labelledby="listening-history-heading"
         >
           <h2 id="listening-history-heading" className="panel-history-heading">
-            Listening History
+            {t('gameplay.listeningHistory')}
           </h2>
           <ul className="history-list">
             {currentCharacter.listeningHistory.map((song) => {
@@ -280,9 +311,9 @@ export function GameplayScreen() {
                       })
                     }
                   >
-                    <span className="time">{song.time}</span>
+                    <span className="time lang-en-inline">{song.time}</span>
                     <span className="dash">—</span>
-                    <span className="song-name">{song.title}</span>
+                    <span className="song-name lang-en-inline">{song.title}</span>
                   </button>
                   <button
                     type="button"
@@ -296,7 +327,7 @@ export function GameplayScreen() {
                       });
                     }}
                   >
-                    Details
+                    {t('gameplay.details')}
                   </button>
                 </li>
               );
@@ -309,7 +340,7 @@ export function GameplayScreen() {
         <button
           type="button"
           className="btn-icon btn-icon--asset"
-          aria-label="Save"
+          aria-label={t('gameplay.save.aria')}
           onClick={() => dispatch({ type: 'SAVE_CHARACTER' })}
         >
           <img src={saveBtnImg} alt="" width={48} height={48} decoding="async" />
@@ -317,7 +348,7 @@ export function GameplayScreen() {
         <button
           type="button"
           className="btn-icon btn-icon--asset"
-          aria-label="Done"
+          aria-label={t('gameplay.done.aria')}
           onClick={() => dispatch({ type: 'SUBMIT' })}
         >
           <img src={doneBtnImg} alt="" width={48} height={48} decoding="async" />

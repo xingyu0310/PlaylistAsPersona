@@ -4,48 +4,76 @@
     "name": "Flash Beat",
     "profession": "Influencer / DJ",
     "mbti": "ESFP",
-    "tagline": "",
+    "tagline": { "en": "", "zh": "" },
     "avatar": "",
     "profileImage": "",
-    "taskBlurb": "Flash Beat is an up-and-coming musician influencer on BurrowBeats. He often uses shared tracks to **shape his image** and **chase opportunities**. Pick **3** songs from his listening history for his **Public Playlist**.",
+    "taskBlurb": {
+      "en": "Flash Beat is an up-and-coming musician influencer on BurrowBeats. He often uses shared tracks to **shape his image** and **chase opportunities**. Pick **3** songs from his listening history for his **Public Playlist**.",
+      "zh": "Flash Beat 是 BurrowBeats 上正在上升期的音乐人 influencer。他常常用分享的歌来**塑造自己的形象**、**争取机会**。从他的聆听记录里挑出 **3** 首，放进他的**公开歌单**。"
+    },
     "assignment": {
-      "title": "Assignment: Build the Hype",
-      "body": [
-        "Flash Beat is an emerging music influencer on BurrowBeats.",
-        "He wants a public playlist that feels exciting, stylish, and impossible to ignore.",
-        "Read his clues and explore his listening history. Choose 3 songs he would feature to attract attention and shape his image."
-      ]
+      "title": { "en": "Assignment: Build the Hype", "zh": "任务：炒热场子" },
+      "body": {
+        "en": [
+          "Flash Beat is an emerging music influencer on BurrowBeats.",
+          "He wants a public playlist that feels exciting, stylish, and impossible to ignore.",
+          "Read his clues and explore his listening history. Choose 3 songs he would feature to attract attention and shape his image."
+        ],
+        "zh": [
+          "Flash Beat 是 BurrowBeats 上崭露头角的音乐 influencer。",
+          "他希望自己的公开歌单听起来兴奋、有型、让人无法忽视。",
+          "阅读他的线索，翻看他的聆听记录，挑出 3 首他会拿来吸引注意、塑造形象的歌。"
+        ]
+      }
     },
     "stories": [
       {
         "id": "mic",
-        "object": "Microphone",
-        "text": "He remembers the first time he spoke into a microphone. His voice trembled—but the music didn't."
+        "object": { "en": "Microphone", "zh": "麦克风" },
+        "text": {
+          "en": "He remembers the first time he spoke into a microphone. His voice trembled—but the music didn't.",
+          "zh": "他还记得第一次对着麦克风开口的时刻。声音在抖，可音乐没有。"
+        }
       },
       {
         "id": "eyes",
-        "object": "Stage / crowd",
-        "text": "• on stage, he watches the crowd.\n• off stage, he needs them to watch him."
+        "object": { "en": "Stage / crowd", "zh": "舞台与人群" },
+        "text": {
+          "en": "• on stage, he watches the crowd.\n• off stage, he needs them to watch him.",
+          "zh": "· 在台上，他看着人群。\n· 下了台，他需要他们看着他。"
+        }
       },
       {
         "id": "console",
-        "object": "Tamagotchi / game console",
-        "text": "Grew up playing 8bit console games like 'Super Clysdale Brothers' and 'Mega Mammoth,' and those chirping, buzzing, energetic soundtracks inspired him to want to make music of his own."
+        "object": { "en": "Tamagotchi / game console", "zh": "电子宠物与游戏机" },
+        "text": {
+          "en": "Grew up playing 8bit console games like 'Super Clysdale Brothers' and 'Mega Mammoth,' and those chirping, buzzing, energetic soundtracks inspired him to want to make music of his own.",
+          "zh": "他是玩着 'Super Clysdale Brothers'、'Mega Mammoth' 这类 8-bit 游戏长大的。那些吱吱作响、嗡嗡跳跃、充满能量的 BGM，让他也想做出属于自己的音乐。"
+        }
       },
       {
         "id": "heart",
-        "object": "Broken heart",
-        "text": "He had a song he couldn't stop replaying after the breakup. It understood what he couldn't say out loud."
+        "object": { "en": "Broken heart", "zh": "心碎" },
+        "text": {
+          "en": "He had a song he couldn't stop replaying after the breakup. It understood what he couldn't say out loud.",
+          "zh": "分手之后，他有一首歌怎么也停不下来。那首歌懂得他说不出口的那些话。"
+        }
       },
       {
         "id": "guitar",
-        "object": "Electric guitar",
-        "text": "As a teenager, he spent hours turning the distortion knob all the way up, chasing the loudest, most overwhelming sound he could create. That was the first time he felt what music could do to a body."
+        "object": { "en": "Electric guitar", "zh": "电吉他" },
+        "text": {
+          "en": "As a teenager, he spent hours turning the distortion knob all the way up, chasing the loudest, most overwhelming sound he could create. That was the first time he felt what music could do to a body.",
+          "zh": "十几岁的时候，他一次次把失真旋钮拧到最大，追求自己能做出的最响、最汹涌的声音。那是他第一次感受到，音乐能对一副身体做什么。"
+        }
       },
       {
         "id": "synth",
-        "object": "Synthesizer",
-        "text": "When he found his first synthesizer, he realized he didn't just want to play music—he wanted to build it."
+        "object": { "en": "Synthesizer", "zh": "合成器" },
+        "text": {
+          "en": "When he found his first synthesizer, he realized he didn't just want to play music—he wanted to build it.",
+          "zh": "拿到第一台合成器时，他意识到：自己不只是想演奏音乐——他想亲手把它造出来。"
+        }
       }
     ],
     "listeningHistory": [
@@ -53,19 +81,22 @@
         "id": "song_glitching",
         "title": "Glitching Heartbeat",
         "time": "02:05 AM",
-        "description": "(TBD)"
+        "description": { "en": "(TBD)", "zh": "（待定）" }
       },
       {
         "id": "song_empty",
         "title": "Empty Dancefloor Echo",
         "time": "02:01 AM",
-        "description": "(TBD)"
+        "description": { "en": "(TBD)", "zh": "（待定）" }
       },
       {
         "id": "song_pocket",
         "title": "Pocket Galaxy (8-Bit Dream)",
         "time": "09:51 PM",
-        "description": "Nostalgic 8-bit tones building a tiny pocket universe.",
+        "description": {
+          "en": "Nostalgic 8-bit tones building a tiny pocket universe.",
+          "zh": "一颗怀旧的 8-bit 小宇宙，在口袋里慢慢转。"
+        },
         "playCount": 27,
         "artist": "Pixel Stable",
         "artistHandle": "@Pixel Stable",
@@ -79,13 +110,13 @@
         "id": "song_signal",
         "title": "Signal In Control",
         "time": "03:34 PM",
-        "description": "(TBD)"
+        "description": { "en": "(TBD)", "zh": "（待定）" }
       },
       {
         "id": "song_neon",
         "title": "Neon Drop Theory",
         "time": "01:18 PM",
-        "description": "(TBD)"
+        "description": { "en": "(TBD)", "zh": "（待定）" }
       }
     ],
     "correctPublicPlaylist": ["song_pocket", "song_signal", "song_neon"]
@@ -95,37 +126,60 @@
     "name": "Soft Frame",
     "profession": "Designer",
     "mbti": "INFP",
-    "tagline": "",
+    "tagline": { "en": "", "zh": "" },
     "avatar": "",
     "profileImage": "",
-    "taskBlurb": "(TBD) Task description for this character.",
+    "taskBlurb": {
+      "en": "(TBD) Task description for this character.",
+      "zh": "（待定）这个角色的任务描述。"
+    },
     "assignment": {
-      "title": "Assignment: Curate the Vibe",
-      "body": [
-        "Soft Frame sees music as part of her aesthetic world.",
-        "Read her clues and listening history, then select 3 songs that best match the image she wants others to see."
-      ]
+      "title": { "en": "Assignment: Curate the Vibe", "zh": "任务：策展氛围感" },
+      "body": {
+        "en": [
+          "Soft Frame uses music to shape how others see her online.",
+          "She wants a public playlist that feels stylish, carefully chosen, and likely to catch the attention of people who share her K-pop taste.",
+          "Read her clues and listening history, then choose 3 songs she would place in her public playlist."
+        ],
+        "zh": [
+          "对 Soft Frame 来说，音乐也是她线上形象的一部分。",
+          "她想让自己的公开歌单看起来有风格、经过精心挑选，同时吸引到和她有相似 K-pop 审美的人。",
+          "阅读她的线索和收听记录，选出 3 首她会放进公开歌单里的歌。"
+        ]
+      }
     },
     "stories": [
       {
         "id": "opera",
-        "object": "Opera vampire figurine",
-        "text": "She still remembers the first musical that made her feel powerful in the dark.\nSince then, she has loved songs that feel larger than life."
+        "object": { "en": "Opera vampire figurine", "zh": "歌剧吸血鬼人偶" },
+        "text": {
+          "en": "She still remembers the first musical that made her feel powerful in the dark.\nSince then, she has loved songs that feel larger than life.",
+          "zh": "她还记得第一部让她在黑暗里感到有力量的音乐剧。\n从那以后，她偏爱那些比生活还要大一号的歌。"
+        }
       },
       {
         "id": "palette",
-        "object": "Artist's palette",
-        "text": "As a visual arts student, she rarely looks at an album as sound alone.\nShe studies the colors, typography, and composition,\nsearching for clues about the world the music wants to create."
+        "object": { "en": "Artist's palette", "zh": "画家的调色盘" },
+        "text": {
+          "en": "As a visual arts student, she rarely looks at an album as sound alone.\nShe studies the colors, typography, and composition,\nsearching for clues about the world the music wants to create.",
+          "zh": "作为一名视觉艺术学生，她很少只把一张专辑当成声音来听。\n她会研究它的色彩、字体、构图，\n从中寻找这张专辑想搭建的世界的线索。"
+        }
       },
       {
         "id": "camera",
-        "object": "Camera",
-        "text": "She began carrying a camera because she was afraid ordinary moments would disappear too quickly.\nOver time, she learned to frame them carefully,\nturning everyday life into something worth keeping."
+        "object": { "en": "Camera", "zh": "相机" },
+        "text": {
+          "en": "She began carrying a camera because she was afraid ordinary moments would disappear too quickly.\nOver time, she learned to frame them carefully,\nturning everyday life into something worth keeping.",
+          "zh": "她开始随身带相机，是因为害怕那些普通的瞬间消失得太快。\n久而久之，她学会了小心地为它们取景，\n把日常生活变成值得留下的东西。"
+        }
       },
       {
         "id": "lightstick",
-        "object": "Lightstick",
-        "text": "At concerts, she lifts her lightstick with thousands of others,\nfeeling herself become part of something larger than her own voice."
+        "object": { "en": "Lightstick", "zh": "应援棒" },
+        "text": {
+          "en": "At concerts, she lifts her lightstick with thousands of others,\nfeeling herself become part of something larger than her own voice.",
+          "zh": "在演唱会上，她和成千上万人一起举起应援棒，\n感觉自己变成了某种比自己嗓音更大的东西的一部分。"
+        }
       }
     ],
     "listeningHistory": [
@@ -133,71 +187,100 @@
         "id": "sf_s1",
         "title": "Gloss on the Window",
         "time": "05:05 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "sf_s2",
-        "title": "Lightstick Galaxy",
+        "title": "Seventeen Mirrors",
         "time": "09:40 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "sf_s3",
         "title": "Cherry Lip Gloss Theory",
         "time": "09:51 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "sf_s4",
         "title": "Velvet Polaroid",
         "time": "09:56 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "sf_s5",
         "title": "Curtain Call in My Bedroom",
         "time": "11:18 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       }
     ],
-    "correctPublicPlaylist": ["sf_s3", "sf_s4", "sf_s5"]
+    "correctPublicPlaylist": ["sf_s3", "sf_s2", "sf_s4"]
   },
   {
     "id": "marshmallow",
     "name": "Marshmallow",
     "profession": "Student",
     "mbti": "INFJ",
-    "tagline": "",
+    "tagline": { "en": "", "zh": "" },
     "avatar": "",
     "profileImage": "",
-    "taskBlurb": "(TBD) Task description for this character.",
+    "taskBlurb": {
+      "en": "(TBD) Task description for this character.",
+      "zh": "（待定）这个角色的任务描述。"
+    },
     "assignment": {
-      "title": "Assignment: A Softer Introduction",
-      "body": [
-        "Marshmallow wants to share music that feels personal, but not too revealing.",
-        "Look through her clues and private listening history. Choose 3 songs she would feel comfortable placing in her public playlist."
-      ]
+      "title": { "en": "Assignment: A Gentle Hello", "zh": "任务：温柔的招呼" },
+      "body": {
+        "en": [
+          "Marshmallow is shy and sensitive.",
+          "Sometimes, sharing a song feels easier than saying how she feels.",
+          "On BurrowBeats, she hopes music can help her connect with people.",
+          "Understand her a little, and maybe even start a gentle friendship.",
+          "Read her clues and listening history.",
+          "Choose 3 songs she would be willing to place in her public playlist."
+        ],
+        "zh": [
+          "Marshmallow 有点害羞，也很敏感。",
+          "有时候，分享一首歌比说出自己的心情更容易。",
+          "在 BurrowBeats 上，她希望音乐能帮她和别人建立连接。",
+          "希望有人能稍微懂她一点，也许还能由此开始一段温柔的友谊。",
+          "阅读她的线索和收听记录。",
+          "挑出 3 首她愿意放进公开歌单里的歌。"
+        ]
+      }
     },
     "stories": [
       {
         "id": "yarn",
-        "object": "Ball of yarn",
-        "text": "In her spare time, she knits small sweaters from her own wool.\nIt is her quiet way of turning softness into something that can last."
+        "object": { "en": "Ball of yarn", "zh": "毛线球" },
+        "text": {
+          "en": "In her spare time, she knits small sweaters from her own wool.\nIt is her quiet way of turning softness into something that can last.",
+          "zh": "空闲的时候，她会用自己的羊毛织一件件小毛衣。\n那是她用安静的方式，把柔软变成可以留存的东西。"
+        }
       },
       {
         "id": "pillow",
-        "object": "Pillow",
-        "text": "On rainy days, she disappears into her pillow,\nletting soft dreams and slower thoughts carry her somewhere gentler."
+        "object": { "en": "Pillow", "zh": "枕头" },
+        "text": {
+          "en": "On rainy days, she disappears into her pillow,\nletting soft dreams and slower thoughts carry her somewhere gentler.",
+          "zh": "下雨天，她把自己埋进枕头里，\n让柔软的梦和缓慢的念头，把她带到一个更温柔的地方。"
+        }
       },
       {
         "id": "metro",
-        "object": "Metro card",
-        "text": "Her ride home is long. On the train, she listens quietly,\nsaving her softer songs for the window, and faster ones for the days she needs a little lift."
+        "object": { "en": "Metro card", "zh": "地铁卡" },
+        "text": {
+          "en": "Her ride home is long. On the train, she listens quietly,\nsaving her softer songs for the window, and faster ones for the days she needs a little lift.",
+          "zh": "她回家的路很长。在地铁上她安静地听着歌，\n把更柔软的歌留给窗外，把更快的歌留给需要一点提神的日子。"
+        }
       },
       {
         "id": "tarot",
-        "object": "Tarot card",
-        "text": "She does not always trust fortune tellers,\nbut she has learned that the heart often notices what the mind has yet to name."
+        "object": { "en": "Tarot card", "zh": "塔罗牌" },
+        "text": {
+          "en": "She does not always trust fortune tellers,\nbut she has learned that the heart often notices what the mind has yet to name.",
+          "zh": "她并不完全相信算命的人，\n但她渐渐明白：心里往往已经察觉到，脑子还说不出口的事。"
+        }
       }
     ],
     "listeningHistory": [
@@ -205,31 +288,31 @@
         "id": "mm_s1",
         "title": "Thread Through Summer",
         "time": "04:36 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "mm_s2",
         "title": "After 4PM",
         "time": "05:08 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "mm_s3",
         "title": "The Meaning of Leaving",
         "time": "05:51 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "mm_s4",
         "title": "Stone in Her Sugar Cup",
         "time": "01:18 AM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       },
       {
         "id": "mm_s5",
         "title": "It's raining",
         "time": "11:42 PM",
-        "description": ""
+        "description": { "en": "", "zh": "" }
       }
     ],
     "correctPublicPlaylist": ["mm_s1", "mm_s2", "mm_s3"]
