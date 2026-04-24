@@ -6,13 +6,13 @@ import flashImg from '../assets/ui/flash.png';
 import lineImg from '../assets/ui/Line.png';
 import continueBtnImg from '../assets/ui/continue-btn.png';
 import detectiveImg from '../assets/characters/detective.png';
-import LanguageToggle from '../components/LanguageToggle.jsx';
+import TopRightControls from '../components/TopRightControls.jsx';
 
 export function IntroScreen() {
   const { navigate, t } = useGame();
   return (
     <div className="screen screen-intro">
-      <LanguageToggle className="lang-toggle--floating" />
+      <TopRightControls />
       <div className="intro-inner">
         <h1 className="intro-header">
           <span className="intro-deco intro-deco--left" aria-hidden>

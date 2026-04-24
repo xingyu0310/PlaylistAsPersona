@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useGame } from '../context/GameContext.jsx';
 import noteImg from '../assets/ui/音符.png';
 import note2Img from '../assets/ui/音符2.png';
@@ -12,7 +13,9 @@ import { MissionPanel } from '../components/MissionPanel.jsx';
 import { HelpPanel } from '../components/HelpPanel.jsx';
 import { SongDetailModal } from '../components/SongDetailModal.jsx';
 import LanguageToggle from '../components/LanguageToggle.jsx';
+import BgmToggle from '../components/BgmToggle.jsx';
 import { STORY_OBJECT_BY_CHARACTER } from '../utils/storyObjects.js';
+import { DIALOGUE_BOX_BG, PLAYER_DIALOGUE_CHAR } from '../utils/loadCharacters.js';
 
 function songById(character, id) {
   return character.listeningHistory.find((s) => s.id === id);
@@ -29,21 +32,71 @@ export function GameplayScreen() {
     t,
     pick,
   } = useGame();
+  const [assignmentOpen, setAssignmentOpen] = useState(false);
+  const [dialogueStep, setDialogueStep] = useState(0);
+
+  const dialogueSteps = useMemo(() => {
+    if (!currentCharacter?.assignment) return [];
+    const custom = currentCharacter.assignmentDialogue;
+    if (Array.isArray(custom) && custom.length) {
+      return custom
+        .map((s) => ({ speaker: s.speaker || 'self', text: pick(s.text) }))
+        .filter((s) => s.text);
+    }
+    const body = pick(currentCharacter.assignment.body);
+    const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
+    const steps = paragraphs
+      .filter(Boolean)
+      .map((text) => ({ speaker: 'self', text }));
+    steps.push({ speaker: 'player', text: t('dialogue.playerFallback') });
+    return steps;
+  }, [currentCharacter, pick, t]);
+
+  const openAssignment = () => {
+    setDialogueStep(0);
+    setAssignmentOpen(true);
+  };
+  const closeAssignment = () => setAssignmentOpen(false);
+  const advanceDialogue = () => {
+    setDialogueStep((i) => {
+      if (i >= dialogueSteps.length - 1) {
+        setAssignmentOpen(false);
+        return 0;
+      }
+      return i + 1;
+    });
+  };
+
+  useEffect(() => {
+    if (!assignmentOpen) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        closeAssignment();
+      } else if (
+        e.key === 'Enter' ||
+        e.key === ' ' ||
+        e.key === 'ArrowRight'
+      ) {
+        const target = e.target;
+        if (target instanceof Element && target.closest('button')) return;
+        e.preventDefault();
+        advanceDialogue();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assignmentOpen, dialogueSteps.length]);
+
+  useEffect(() => {
+    setAssignmentOpen(false);
+    setDialogueStep(0);
+  }, [state.currentCharacterId, state.storyMode]);
+
   if (!currentCharacter) return null;
 
   const inStory = state.storyMode;
   const tornProfile = !!currentCharacter.profilePanelBg;
-  const assignmentTitle = currentCharacter.assignment
-    ? pick(currentCharacter.assignment.title)
-    : '';
-  const assignmentBody = currentCharacter.assignment
-    ? (() => {
-        const body = pick(currentCharacter.assignment.body);
-        if (Array.isArray(body)) return body;
-        if (typeof body === 'string') return [body];
-        return [];
-      })()
-    : [];
   const tagline = currentCharacter.tagline ? pick(currentCharacter.tagline) : '';
 
   return (
@@ -52,6 +105,79 @@ export function GameplayScreen() {
       <MissionPanel />
       <HelpPanel />
       <SongDetailModal />
+
+      {assignmentOpen && currentCharacter.assignment && dialogueSteps.length ? (
+        (() => {
+          const step = dialogueSteps[Math.min(dialogueStep, dialogueSteps.length - 1)];
+          const isPlayer = step.speaker === 'player';
+          const speakerName = isPlayer ? t('dialogue.you') : currentCharacter.name;
+          const charImg = isPlayer ? PLAYER_DIALOGUE_CHAR : currentCharacter.dialogueChar;
+          const speakerKey = isPlayer ? 'player' : currentCharacter.id;
+          return (
+            <div
+              className="dialogue-backdrop"
+              role="presentation"
+              onClick={closeAssignment}
+            >
+              <div
+                className={`dialogue-wrap dialogue-wrap--${speakerKey}`}
+                role="dialog"
+                aria-modal="true"
+                aria-label={t('gameplay.assignmentModal.aria')}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={DIALOGUE_BOX_BG}
+                  alt=""
+                  className="dialogue-box-img"
+                  decoding="async"
+                />
+                {charImg ? (
+                  <img
+                    src={charImg}
+                    alt=""
+                    className="dialogue-char-img"
+                    decoding="async"
+                  />
+                ) : null}
+                <div className="dialogue-text" aria-live="polite">
+                  <p className={`dialogue-speaker${isPlayer ? '' : ' lang-en-inline'}`}>
+                    {speakerName}:
+                  </p>
+                  <p className="dialogue-message">
+                    {step.text.split('\n').map((line, i, arr) => (
+                      <span key={i}>
+                        {line}
+                        {i < arr.length - 1 ? <br /> : null}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="dialogue-advance"
+                  onClick={advanceDialogue}
+                  aria-label={t('dialogue.next.aria')}
+                >
+                  <img
+                    src={nextImg}
+                    alt=""
+                    decoding="async"
+                  />
+                </button>
+                <div className="dialogue-steps" aria-hidden="true">
+                  {dialogueSteps.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`dialogue-step-dot ${i === dialogueStep ? 'is-active' : ''} ${i < dialogueStep ? 'is-done' : ''}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()
+      ) : null}
 
       <header className="game-header">
         <button
@@ -68,6 +194,7 @@ export function GameplayScreen() {
           <img src={noteImg} alt="" className="game-deco game-deco--r" width={32} height={32} />
         </div>
         <div className="game-header-right">
+          <BgmToggle className="bgm-toggle--inline" />
           <LanguageToggle className="lang-toggle--inline" />
           <button
             type="button"
@@ -120,36 +247,30 @@ export function GameplayScreen() {
           {!inStory ? (
             <>
               <div className="profile-layout">
-                <div
-                  className="profile-art"
-                  tabIndex={0}
-                  aria-label={
-                    assignmentTitle
-                      ? `${currentCharacter.name} — ${assignmentTitle}`
-                      : currentCharacter.name
-                  }
-                >
-                  {currentCharacter.profileImage ? (
-                    <img src={currentCharacter.profileImage} alt="" />
-                  ) : (
-                    <span className="art-placeholder">
-                      {t('gameplay.artPlaceholder')}
-                    </span>
-                  )}
+                <div className="profile-art-col">
+                  <div
+                    className="profile-art"
+                    aria-label={currentCharacter.name}
+                  >
+                    {currentCharacter.profileImage ? (
+                      <img src={currentCharacter.profileImage} alt="" />
+                    ) : (
+                      <span className="art-placeholder">
+                        {t('gameplay.artPlaceholder')}
+                      </span>
+                    )}
+                  </div>
                   {currentCharacter.assignment ? (
-                    <span className="profile-art-hint" aria-hidden="true">
-                      {t('gameplay.hoverForTask')}
-                    </span>
-                  ) : null}
-                  {currentCharacter.assignment ? (
-                    <div className="assignment-peek" role="tooltip">
-                      <h3 className="assignment-peek-title">{assignmentTitle}</h3>
-                      {assignmentBody.map((p, i) => (
-                        <p key={i} className="assignment-peek-body">
-                          {p}
-                        </p>
-                      ))}
-                    </div>
+                    <button
+                      type="button"
+                      className="btn-accept-task"
+                      onClick={openAssignment}
+                      aria-label={t('gameplay.acceptTask.aria')}
+                    >
+                      <span className="btn-accept-task__label">
+                        {t('gameplay.acceptTask')}
+                      </span>
+                    </button>
                   ) : null}
                 </div>
                 <div className="profile-main-col">

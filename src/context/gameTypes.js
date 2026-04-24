@@ -31,6 +31,8 @@
  * @property {string} [avatar]
  * @property {string} [profilePanelBg] Ripped-paper panel PNG stretched with game background showing through transparent areas.
  * @property {string} [profileImage]
+ * @property {string} [dialogueChar] Character illustration that sits on top-left of the shared yellow dialogue box when "Accept Task" is clicked.
+ * @property {{speaker?: 'self'|'player', text: string|{en?: string, zh?: string}}[]} [assignmentDialogue] Optional stepped dialogue overriding the auto-generated fallback from assignment.body.
  * @property {string} [taskBlurb]
  * @property {StoryItem[]} stories
  * @property {Song[]} listeningHistory

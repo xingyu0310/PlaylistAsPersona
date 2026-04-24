@@ -1,13 +1,13 @@
 import { useGame } from '../context/GameContext.jsx';
 import { PLAYLIST_SIZE } from '../constants.js';
 import noteImg from '../assets/ui/音符.png';
-import LanguageToggle from '../components/LanguageToggle.jsx';
+import TopRightControls from '../components/TopRightControls.jsx';
 
 export function TutorialScreen() {
   const { navigate, t } = useGame();
   return (
     <div className="screen screen-tutorial">
-      <LanguageToggle className="lang-toggle--floating" />
+      <TopRightControls />
       <div className="tutorial-inner">
         <h1 className="title-lg title-lg--with-deco">
           <img src={noteImg} alt="" className="tutorial-title-deco" width={36} height={36} />

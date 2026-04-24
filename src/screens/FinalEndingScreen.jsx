@@ -1,5 +1,5 @@
 import { useGame } from '../context/GameContext.jsx';
-import LanguageToggle from '../components/LanguageToggle.jsx';
+import TopRightControls from '../components/TopRightControls.jsx';
 
 export function FinalEndingScreen() {
   const { state, dispatch, characters, t } = useGame();
@@ -7,7 +7,7 @@ export function FinalEndingScreen() {
 
   return (
     <div className="screen screen-final-ending">
-      <LanguageToggle className="lang-toggle--floating" />
+      <TopRightControls />
       <div className="ending-inner">
         <p className="ending-eyebrow">{t('final.eyebrow')}</p>
         <h1 className="title-lg">{t('final.title')}</h1>

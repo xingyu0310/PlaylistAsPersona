@@ -1,6 +1,6 @@
 import { useGame } from '../context/GameContext.jsx';
 import { getCharacterEnding } from '../utils/endings.js';
-import LanguageToggle from '../components/LanguageToggle.jsx';
+import TopRightControls from '../components/TopRightControls.jsx';
 
 export function CharacterEndingScreen() {
   const { state, dispatch, characters, playlistSize, t, pick } = useGame();
@@ -33,7 +33,7 @@ export function CharacterEndingScreen() {
 
   return (
     <div className="screen screen-character-ending">
-      <LanguageToggle className="lang-toggle--floating" />
+      <TopRightControls />
       <div className="ending-inner">
         <p className="ending-eyebrow">
           {t('charEnding.eyebrow', { saved: savedCount, total: totalCount })}

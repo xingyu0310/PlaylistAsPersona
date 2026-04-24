@@ -97,11 +97,84 @@ html[lang='zh'] .lang-en-inline {
   justify-self: end;
 }
 
+/* Background music toggle (music note icon) */
+.bgm-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+  transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+}
+
+.bgm-toggle img {
+  display: block;
+  width: clamp(44px, 5vw, 64px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bgm-toggle:hover,
+.bgm-toggle:focus-visible {
+  transform: rotate(-6deg) scale(1.08);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.28));
+  outline: none;
+}
+
+.bgm-toggle:active {
+  transform: rotate(-3deg) scale(0.95);
+}
+
+.bgm-toggle.is-muted {
+  opacity: 0.5;
+}
+
+.bgm-toggle.is-muted::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 50%;
+  height: 3px;
+  background: var(--ink, #1b1b1b);
+  border-radius: 3px;
+  transform: translateY(-50%) rotate(-18deg);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.bgm-toggle--inline img {
+  width: clamp(36px, 4vw, 52px);
+}
+
+/* Top-right controls cluster (BGM + language) */
+.top-right-controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.2vw, 18px);
+}
+
+.top-right-controls--floating {
+  position: fixed;
+  top: clamp(12px, 2vh, 24px);
+  right: clamp(12px, 2vw, 28px);
+  z-index: 120;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lang-toggle,
   .lang-toggle:hover,
   .lang-toggle:focus-visible,
-  .lang-toggle:active {
+  .lang-toggle:active,
+  .bgm-toggle,
+  .bgm-toggle:hover,
+  .bgm-toggle:focus-visible,
+  .bgm-toggle:active {
     transition: none;
     transform: none;
   }
@@ -774,13 +847,13 @@ h1.intro-header {
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin: 0.25rem 0 0.6rem;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0.8rem;
   background: none;
   border: none;
-  padding: 0.15rem 0;
+  padding: 0.2rem 0;
   line-height: 1.2;
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   color: var(--ink);
   cursor: pointer;
   text-decoration: none;
@@ -789,13 +862,13 @@ h1.intro-header {
 
 .link-learn__text {
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
 .link-learn__img {
   display: block;
   flex-shrink: 0;
-  width: 28px;
+  width: 44px;
   height: auto;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
@@ -842,6 +915,13 @@ h1.intro-header {
   }
 }
 
+.profile-art-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .profile-art {
   position: relative;
   border: none;
@@ -851,7 +931,6 @@ h1.intro-header {
   align-items: flex-start;
   justify-content: flex-start;
   overflow: visible;
-  cursor: help;
   outline: none;
 }
 
@@ -863,76 +942,232 @@ h1.intro-header {
   transform: scale(1.015);
 }
 
-.profile-art:focus-visible {
-  outline: 2px dashed var(--ink);
-  outline-offset: 6px;
-}
-
-.profile-art-hint {
-  position: absolute;
-  bottom: 0.4rem;
-  right: 0.4rem;
-  background: rgba(255, 247, 232, 0.9);
-  border: 1.5px solid var(--ink);
+/* "View Case" button below the character standee, horizontally centered */
+.btn-accept-task {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.25rem;
+  background: rgba(255, 247, 232, 0.45);
+  color: var(--ink, #1b1b1b);
+  border: 2.5px solid var(--ink, #1b1b1b);
   border-radius: 999px;
-  padding: 0.18rem 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink);
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
 }
 
-.profile-art:hover .profile-art-hint,
-.profile-art:focus-within .profile-art-hint {
-  opacity: 0;
+.btn-accept-task:hover,
+.btn-accept-task:focus-visible {
+  transform: scale(1.04);
+  background: rgba(255, 247, 232, 0.7);
+  outline: none;
 }
 
-.assignment-peek {
+.btn-accept-task:active {
+  transform: scale(0.97);
+}
+
+.btn-accept-task__label {
+  white-space: nowrap;
+}
+
+/* Assignment dialogue box (character speech-bubble overlay, VN-style dock at bottom) */
+.dialogue-backdrop {
   position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 150;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem 1rem clamp(1.2rem, 3.5vh, 2.4rem);
+  animation: dialogue-fade-in 180ms ease-out;
+}
+
+@keyframes dialogue-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialogue-wrap {
+  position: relative;
+  width: min(940px, 94vw);
+  container-type: inline-size;
+  animation: dialogue-pop-in 220ms cubic-bezier(0.2, 1.2, 0.4, 1) both;
+}
+
+@keyframes dialogue-pop-in {
+  from { transform: translateY(12px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.dialogue-box-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(6px 8px 0 rgba(0, 0, 0, 0.25));
+}
+
+/* Character illustration sits INSIDE the yellow box, left side, vertically centered */
+.dialogue-char-img {
+  position: absolute;
+  left: 2.5%;
   top: 50%;
-  left: 50%;
-  width: min(450px, 92vw);
-  max-height: min(70vh, 560px);
-  background: rgba(255, 247, 232, 0.98);
-  border: 2px solid var(--ink);
-  border-radius: 14px;
-  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.85);
-  padding: 1.4rem 1.6rem;
+  transform: translateY(-50%);
+  height: 86%;
+  width: auto;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+}
+
+/* Per-character size tweaks (small adjustments depending on art framing) */
+.dialogue-wrap--flashbeat .dialogue-char-img {
+  height: 90%;
+  left: 2%;
+}
+
+.dialogue-wrap--softframe .dialogue-char-img {
+  height: 88%;
+  left: 2.5%;
+}
+
+.dialogue-wrap--marshmallow .dialogue-char-img {
+  height: 82%;
+  left: 3%;
+}
+
+.dialogue-wrap--player .dialogue-char-img {
+  height: 88%;
+  left: 2%;
+}
+
+/* Text sits to the right of the character, inside the yellow box */
+.dialogue-text {
+  position: absolute;
+  left: 32%;
+  right: 6%;
+  top: 18%;
+  bottom: 26%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   overflow: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, calc(-50% - 6px));
-  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-  z-index: 140;
+  color: var(--ink, #1b1b1b);
+  font-family: var(--font-body);
+  padding: 0;
 }
 
-.profile-art:hover .assignment-peek,
-.profile-art:focus-within .assignment-peek {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%);
+html[lang='zh'] .dialogue-text {
+  font-family: var(--font-cn, var(--font-body));
 }
 
-.assignment-peek-title {
-  margin: 0 0 0.75rem;
+.dialogue-speaker {
+  margin: 0 0 0.6rem;
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  line-height: 1.25;
+  font-size: clamp(1.1rem, 2.8cqw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
 }
 
-.assignment-peek-body {
-  margin: 0 0 0.55rem;
-  line-height: 1.55;
-  font-size: 1.02rem;
+html[lang='zh'] .dialogue-speaker {
+  font-family: var(--font-cn, var(--font-display));
 }
 
-.assignment-peek-body:last-child {
-  margin-bottom: 0;
+.dialogue-message {
+  margin: 0;
+  font-size: clamp(0.95rem, 2.05cqw, 1.2rem);
+  line-height: 1.5;
+}
+
+/* Forward "next" arrow inside the bottom-right of the box */
+.dialogue-advance {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  padding: 0.3rem 0.35rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  line-height: 0;
+  border-radius: 6px;
+  transition: transform 160ms ease, filter 160ms ease;
+  z-index: 3;
+}
+
+.dialogue-advance img {
+  display: block;
+  width: clamp(42px, 6cqw, 68px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dialogue-advance:hover,
+.dialogue-advance:focus-visible {
+  transform: translateX(3px) scale(1.05);
+  outline: none;
+}
+
+.dialogue-advance:active {
+  transform: translateX(1px) scale(0.96);
+}
+
+/* Step-progress dots under the text (after character) */
+.dialogue-steps {
+  position: absolute;
+  left: 32%;
+  bottom: 10%;
+  display: flex;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.dialogue-step-dot {
+  width: clamp(6px, 0.9cqw, 10px);
+  height: clamp(6px, 0.9cqw, 10px);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(0, 0, 0, 0.6);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.dialogue-step-dot.is-done {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.dialogue-step-dot.is-active {
+  background: var(--ink, #1b1b1b);
+  transform: scale(1.15);
+}
+
+@media (max-width: 600px) {
+  .dialogue-wrap {
+    width: min(96vw, 600px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialogue-backdrop,
+  .dialogue-wrap {
+    animation: none;
+  }
+  .dialogue-advance:hover,
+  .dialogue-advance:focus-visible,
+  .dialogue-advance:active {
+    transform: none;
+  }
+  .dialogue-step-dot.is-active {
+    transform: none;
+  }
 }
 
 .profile-art img {
@@ -2003,6 +2238,8 @@ h1.intro-header {
   .slot-fill:hover,
   .btn-detail:hover,
   .btn-ghost:hover,
+  .btn-accept-task:hover,
+  .btn-accept-task:focus-visible,
   .modal-close-btn:hover,
   .modal-play-btn:hover:not(:disabled) {
     transform: none;

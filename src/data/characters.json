@@ -26,6 +26,36 @@
         ]
       }
     },
+    "assignmentDialogue": [
+      {
+        "speaker": "self",
+        "text": {
+          "en": "Hey, I need a playlist that gets people's attention…",
+          "zh": "嘿，我需要一份能吸引眼球的歌单……"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "Something exciting, stylish, and hard to ignore.",
+          "zh": "要刺激、有型、让人无法忽视的那种。"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "Check my clues and listening history, and pick 3 songs I'd post to attract attention and shape my image.",
+          "zh": "翻翻我的线索和聆听记录，挑 3 首我会发出来吸引关注、塑造形象的歌。"
+        }
+      },
+      {
+        "speaker": "player",
+        "text": {
+          "en": "Got it.\nI'll read the clues and see what your playlist is really saying.",
+          "zh": "明白。\n我来读读线索，看看你的歌单到底在说什么。"
+        }
+      }
+    ],
     "stories": [
       {
         "id": "mic",
@@ -148,6 +178,36 @@
         ]
       }
     },
+    "assignmentDialogue": [
+      {
+        "speaker": "self",
+        "text": {
+          "en": "I want my playlist to seem stylish, carefully chosen…",
+          "zh": "我希望我的歌单看起来有风格、像是精挑细选过的……"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "and the kind of thing that might catch the attention of people who share my K-pop taste.",
+          "zh": "那种能吸引到和我有相似 K-pop 审美的人的感觉。"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "Read my clues and listening history, then help me choose 3 songs I'd put in my public playlist.",
+          "zh": "看看我的线索和聆听记录，帮我挑 3 首我会放进公开歌单的歌。"
+        }
+      },
+      {
+        "speaker": "player",
+        "text": {
+          "en": "Got it. Let's see!",
+          "zh": "明白，来看看吧！"
+        }
+      }
+    ],
     "stories": [
       {
         "id": "opera",
@@ -249,6 +309,36 @@
         ]
       }
     },
+    "assignmentDialogue": [
+      {
+        "speaker": "self",
+        "text": {
+          "en": "I'm not very good at starting conversations. Sometimes sharing a song feels easier than saying what I mean.",
+          "zh": "我不太擅长开启对话。有时候分享一首歌，比说出心里的话更容易。"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "I'm hoping music can help me connect with people on BurrowBeats. Maybe even start a gentle friendship…",
+          "zh": "我希望音乐能帮我在 BurrowBeats 上和别人建立连接。也许还能由此开始一段温柔的友谊……"
+        }
+      },
+      {
+        "speaker": "self",
+        "text": {
+          "en": "Read my clues and listening history,\nthen help me choose 3 songs I'd feel comfortable placing in my public playlist.",
+          "zh": "请看看我的线索和聆听记录，\n帮我挑 3 首我愿意放进公开歌单里的歌。"
+        }
+      },
+      {
+        "speaker": "player",
+        "text": {
+          "en": "I'll take the case. Let's see!",
+          "zh": "这个案子我接了，来看看吧！"
+        }
+      }
+    ],
     "stories": [
       {
         "id": "yarn",

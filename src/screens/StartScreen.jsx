@@ -6,14 +6,14 @@ import starImg from '../assets/ui/Star.png';
 import noteImg from '../assets/ui/音符.png';
 import note2Img from '../assets/ui/音符2.png';
 import flashImg from '../assets/ui/flash.png';
-import LanguageToggle from '../components/LanguageToggle.jsx';
+import TopRightControls from '../components/TopRightControls.jsx';
 
 export function StartScreen() {
   const { navigate, t } = useGame();
   return (
     <div className="screen screen-start">
       <h1 className="sr-only">{t('start.aria')}</h1>
-      <LanguageToggle className="lang-toggle--floating" />
+      <TopRightControls />
       <div
         className="start-hero"
         style={{ backgroundImage: `url(${openingBg})` }}
