@@ -1,4 +1,5 @@
 import { PLAYLIST_SIZE } from '../constants.js';
+import { getCharacterEnding, resolveFinalEnding } from './endings.js';
 
 /**
  * @param {import('../context/gameTypes.js').Character[]} characters
@@ -10,6 +11,7 @@ export function computeResult(characters, selections) {
     const correct = new Set(c.correctPublicPlaylist);
     const hits = picked.filter((id) => correct.has(id)).length;
     const total = Math.min(PLAYLIST_SIZE, c.correctPublicPlaylist.length || PLAYLIST_SIZE);
+    const ending = getCharacterEnding(c.id, picked);
     return {
       characterId: c.id,
       name: c.name,
@@ -17,6 +19,8 @@ export function computeResult(characters, selections) {
       recommendedIds: c.correctPublicPlaylist,
       hits,
       total: total || PLAYLIST_SIZE,
+      ending,
+      tag: ending?.tag ?? null,
       note: '(TBD: copy explaining hits vs. persona dimensions.)',
     };
   });
@@ -30,5 +34,7 @@ export function computeResult(characters, selections) {
   else if (avg >= 0.5)
     summary = 'Solid start — keep watching the public / private tension. (placeholder)';
 
-  return { perCharacter, summary };
+  const finalEnding = resolveFinalEnding(perCharacter.map((p) => p.ending));
+
+  return { perCharacter, summary, finalEnding };
 }

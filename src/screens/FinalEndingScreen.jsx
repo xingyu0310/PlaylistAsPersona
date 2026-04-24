@@ -2,8 +2,17 @@ import { useGame } from '../context/GameContext.jsx';
 import TopRightControls from '../components/TopRightControls.jsx';
 
 export function FinalEndingScreen() {
-  const { state, dispatch, characters, t } = useGame();
+  const { state, dispatch, characters, t, pick } = useGame();
   const { result } = state;
+  const finalEnding = result?.finalEnding ?? null;
+  const endingParagraphs = finalEnding
+    ? (() => {
+        const desc = pick(finalEnding.description);
+        if (Array.isArray(desc)) return desc;
+        if (typeof desc === 'string' && desc.length) return [desc];
+        return [];
+      })()
+    : [];
 
   return (
     <div className="screen screen-final-ending">
@@ -12,10 +21,24 @@ export function FinalEndingScreen() {
         <p className="ending-eyebrow">{t('final.eyebrow')}</p>
         <h1 className="title-lg">{t('final.title')}</h1>
 
-        <section className="ending-card ending-placeholder">
-          <h2>{t('final.placeholderTitle')}</h2>
-          <p className="muted">{t('final.placeholderBody')}</p>
-        </section>
+        {finalEnding ? (
+          <section className="ending-card">
+            {finalEnding.subtitle ? (
+              <p className="ending-tag">{pick(finalEnding.subtitle)}</p>
+            ) : null}
+            <h2 className="ending-title">{pick(finalEnding.title)}</h2>
+            {endingParagraphs.map((p, i) => (
+              <p key={i} className="ending-description">
+                {p}
+              </p>
+            ))}
+          </section>
+        ) : (
+          <section className="ending-card ending-placeholder">
+            <h2>{t('final.placeholderTitle')}</h2>
+            <p className="muted">{t('final.placeholderBody')}</p>
+          </section>
+        )}
 
         <section className="ending-card">
           <h2>{t('final.recap')}</h2>

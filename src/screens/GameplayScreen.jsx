@@ -260,6 +260,8 @@ export function GameplayScreen() {
                       </span>
                     )}
                   </div>
+                </div>
+                <div className="profile-main-col">
                   {currentCharacter.assignment ? (
                     <button
                       type="button"
@@ -272,8 +274,6 @@ export function GameplayScreen() {
                       </span>
                     </button>
                   ) : null}
-                </div>
-                <div className="profile-main-col">
                   <div className="profile-fields" data-character-id={currentCharacter.id}>
                     <p>
                       <span className="label">{t('gameplay.fields.name')}</span>{' '}
