@@ -1,10 +1,13 @@
 import { useGame } from '../context/GameContext.jsx';
 import TopRightControls from '../components/TopRightControls.jsx';
+import EmojiFloat from '../components/EmojiFloat.jsx';
+import { getFinalEndingEmojis } from '../utils/endingEmojis.js';
 
 export function FinalEndingScreen() {
   const { state, dispatch, characters, t, pick } = useGame();
   const { result } = state;
   const finalEnding = result?.finalEnding ?? null;
+  const emojiCfg = finalEnding ? getFinalEndingEmojis(finalEnding.id) : null;
   const endingParagraphs = finalEnding
     ? (() => {
         const desc = pick(finalEnding.description);
@@ -16,6 +19,9 @@ export function FinalEndingScreen() {
 
   return (
     <div className="screen screen-final-ending">
+      {emojiCfg ? (
+        <EmojiFloat {...emojiCfg} seed={`final-${finalEnding.id}`} />
+      ) : null}
       <TopRightControls />
       <div className="ending-inner">
         <p className="ending-eyebrow">{t('final.eyebrow')}</p>

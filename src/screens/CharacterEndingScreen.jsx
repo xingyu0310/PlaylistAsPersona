@@ -1,6 +1,8 @@
 import { useGame } from '../context/GameContext.jsx';
 import { getCharacterEnding } from '../utils/endings.js';
+import { getEndingEmojis } from '../utils/endingEmojis.js';
 import TopRightControls from '../components/TopRightControls.jsx';
+import EmojiFloat from '../components/EmojiFloat.jsx';
 
 export function CharacterEndingScreen() {
   const { state, dispatch, characters, playlistSize, t, pick } = useGame();
@@ -31,8 +33,14 @@ export function CharacterEndingScreen() {
   const fallbackName =
     character?.name ?? t('charEnding.placeholderFallbackName');
 
+  const emojiCfg =
+    ending && character ? getEndingEmojis(character.id, ending.id) : null;
+
   return (
     <div className="screen screen-character-ending">
+      {emojiCfg ? (
+        <EmojiFloat {...emojiCfg} seed={`${character.id}-${ending.id}`} />
+      ) : null}
       <TopRightControls />
       <div className="ending-inner">
         <p className="ending-eyebrow">

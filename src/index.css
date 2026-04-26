@@ -1959,11 +1959,299 @@ html[lang='zh'] .dialogue-speaker {
   color: #fff;
   padding: 2rem 1rem 4rem;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .ending-inner {
   max-width: 40rem;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating emoji background (per-ending mood layer). */
+.emoji-float {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.emoji-float__particle {
+  position: absolute;
+  bottom: -8%;
+  opacity: 0;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  animation-name: emoji-float-rise;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+  user-select: none;
+}
+
+.emoji-float__inner {
+  display: inline-block;
+  transform-origin: center;
+}
+
+/* Per-emoji "personality" animations — applied to the inner span so
+   they layer on top of the outer rise/drift transform. */
+.emoji-float__inner[data-emoji='💿'] {
+  animation: emoji-spin var(--spin-duration, 4s) linear infinite;
+}
+
+.emoji-float--still .emoji-float__inner[data-emoji='💿'] {
+  animation: none;
+}
+
+.emoji-float__inner[data-emoji='🎯'] {
+  animation: emoji-pop 2.4s ease-out infinite;
+}
+
+.emoji-float__inner[data-emoji='💎'],
+.emoji-float__inner[data-emoji='✨'] {
+  animation: emoji-twinkle 1.6s ease-in-out infinite;
+}
+
+.emoji-float__inner[data-emoji='🌱'] {
+  animation: emoji-grow-slow 4s ease-out infinite;
+}
+
+.emoji-float__inner[data-emoji='💌'] {
+  animation: emoji-soft-unfold 3s ease-out infinite;
+}
+
+.emoji-float__inner[data-emoji='🫧'] {
+  animation: emoji-bubble-bob 2s ease-in-out infinite;
+}
+
+/* Marshmallow C — "too open": bubbles pop, plant grows too fast. */
+.emoji-float--chaotic .emoji-float__inner[data-emoji='🫧'] {
+  animation: emoji-bubble-pop 1.5s ease-out infinite;
+}
+
+.emoji-float--chaotic .emoji-float__inner[data-emoji='🌱'] {
+  animation: emoji-grow-fast 1.4s ease-out infinite;
+}
+
+/* Final: Observer — never quite converges, every emoji wanders sideways.
+   These selectors come AFTER the per-emoji defaults so they win on
+   equal specificity (class+attr ties). */
+.emoji-float--drift .emoji-float__inner {
+  animation: emoji-drift-wander 5s ease-in-out infinite;
+}
+
+/* Final: Truth Seeker — bubbles pop, hearts pulse louder, no sparkle. */
+.emoji-float--revealing .emoji-float__inner[data-emoji='🫧'] {
+  animation: emoji-bubble-pop 1.7s ease-out infinite;
+}
+
+.emoji-float--revealing .emoji-float__inner[data-emoji='❤️'],
+.emoji-float--revealing .emoji-float__inner[data-emoji='💔'] {
+  animation: emoji-heart-pulse 1.4s ease-in-out infinite;
+}
+
+/* Final: Over-Interpreter — everything spins / wobbles, sparkles burst. */
+.emoji-float--frenzy .emoji-float__inner {
+  animation: emoji-frenzy-spin 2.4s linear infinite;
+}
+
+.emoji-float--frenzy .emoji-float__inner[data-emoji='💿'] {
+  animation: emoji-spin var(--spin-duration, 1.4s) linear infinite;
+}
+
+.emoji-float--frenzy .emoji-float__inner[data-emoji='✨'] {
+  animation: emoji-sparkle-burst 1s ease-out infinite;
+}
+
+@keyframes emoji-float-rise {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0), -110vh, 0)
+      rotate(var(--rot, 0));
+    opacity: 0;
+  }
+}
+
+@keyframes emoji-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes emoji-pop {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.4);
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  90% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes emoji-twinkle {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+@keyframes emoji-grow-slow {
+  0% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes emoji-grow-fast {
+  0% {
+    transform: scale(0);
+  }
+  35% {
+    transform: scale(1.45);
+  }
+  55% {
+    transform: scale(0.85);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes emoji-soft-unfold {
+  0% {
+    transform: scale(0.7) rotate(-8deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes emoji-bubble-bob {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes emoji-bubble-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  85% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes emoji-drift-wander {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(22px);
+    opacity: 1;
+  }
+}
+
+@keyframes emoji-heart-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+@keyframes emoji-frenzy-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.15);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes emoji-sparkle-burst {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emoji-float {
+    display: none;
+  }
 }
 
 .ending-eyebrow {
