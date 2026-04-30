@@ -12,9 +12,11 @@ import cherryLipGlossTheoryAudio from '../assets/audio/Cherry Lip Gloss Theory.m
 import velvetPolaroidAudio from '../assets/audio/Velvet Polaroid.mp3';
 import curtainCallInMyBedroomAudio from '../assets/audio/Curtain Call in My Bedroom.mp3';
 
-// Marshmallow (only the songs currently uploaded; missing entries simply
-// disable the in-modal play button)
+// Marshmallow
+import threadThroughSummerAudio from '../assets/audio/Thread Through Summer.mp3';
 import after4pmAudio from '../assets/audio/After 4PM.mp3';
+import meaningOfLeavingAudio from '../assets/audio/The Meaning of Leaving.mp3';
+import stoneInHerSugarCupAudio from '../assets/audio/Stone in Her Sugar Cup.mp3';
 import itsRainingAudio from '../assets/audio/It\'s raining.mp3';
 
 /**
@@ -38,7 +40,10 @@ export const SONG_PREVIEW_AUDIO_BY_ID = {
   sf_s4: velvetPolaroidAudio,
   sf_s5: curtainCallInMyBedroomAudio,
 
-  // Marshmallow (mm_s1 / mm_s3 / mm_s4 audio not uploaded yet)
+  // Marshmallow
+  mm_s1: threadThroughSummerAudio,
   mm_s2: after4pmAudio,
+  mm_s3: meaningOfLeavingAudio,
+  mm_s4: stoneInHerSugarCupAudio,
   mm_s5: itsRainingAudio,
 };
