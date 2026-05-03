@@ -1,6 +1,7 @@
 import { useGame } from '../context/GameContext.jsx';
 import { PLAYLIST_SIZE } from '../constants.js';
 import noteImg from '../assets/ui/音符.png';
+import playBtnImg from '../assets/ui/play2-btn.png';
 import TopRightControls from '../components/TopRightControls.jsx';
 
 export function TutorialScreen() {
@@ -65,8 +66,13 @@ export function TutorialScreen() {
             {t('tutorial.steps.7e')}
           </li>
         </ol>
-        <button type="button" className="btn btn-primary" onClick={() => navigate('gameplay')}>
-          {t('tutorial.cta.play')}
+        <button
+          type="button"
+          className="btn-tutorial-play"
+          onClick={() => navigate('gameplay')}
+          aria-label={t('tutorial.cta.play')}
+        >
+          <img src={playBtnImg} alt="" decoding="async" />
         </button>
       </div>
     </div>

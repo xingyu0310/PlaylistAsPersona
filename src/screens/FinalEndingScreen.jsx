@@ -2,6 +2,8 @@ import { useGame } from '../context/GameContext.jsx';
 import TopRightControls from '../components/TopRightControls.jsx';
 import EmojiFloat from '../components/EmojiFloat.jsx';
 import { getFinalEndingEmojis } from '../utils/endingEmojis.js';
+import replayBtnImg from '../assets/ui/replay.png';
+import backToStartBtnImg from '../assets/ui/back to start.png';
 
 export function FinalEndingScreen() {
   const { state, dispatch, characters, t, pick } = useGame();
@@ -66,17 +68,19 @@ export function FinalEndingScreen() {
         <div className="ending-actions">
           <button
             type="button"
-            className="btn btn-save"
+            className="btn-img-action"
             onClick={() => dispatch({ type: 'REPLAY' })}
+            aria-label={t('final.replay')}
           >
-            {t('final.replay')}
+            <img src={replayBtnImg} alt="" decoding="async" />
           </button>
           <button
             type="button"
-            className="btn btn-done"
+            className="btn-img-action"
             onClick={() => dispatch({ type: 'BACK_TO_START' })}
+            aria-label={t('final.backToStart')}
           >
-            {t('final.backToStart')}
+            <img src={backToStartBtnImg} alt="" decoding="async" />
           </button>
         </div>
       </div>

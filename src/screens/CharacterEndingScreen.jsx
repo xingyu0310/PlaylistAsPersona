@@ -3,6 +3,9 @@ import { getCharacterEnding } from '../utils/endings.js';
 import { getEndingEmojis } from '../utils/endingEmojis.js';
 import TopRightControls from '../components/TopRightControls.jsx';
 import EmojiFloat from '../components/EmojiFloat.jsx';
+import backToGameplayBtnImg from '../assets/ui/Back to gameplay.png';
+import continueBtnImg from '../assets/ui/continue2.png';
+import seeFinalEndingBtnImg from '../assets/ui/See final ending.png';
 
 export function CharacterEndingScreen() {
   const { state, dispatch, characters, playlistSize, t, pick } = useGame();
@@ -101,18 +104,26 @@ export function CharacterEndingScreen() {
         <div className="ending-actions">
           <button
             type="button"
-            className="btn btn-save"
+            className="btn-img-action"
             onClick={() => dispatch({ type: 'CONTINUE_FROM_CHARACTER_ENDING' })}
+            aria-label={
+              allSaved ? t('charEnding.backToGameplay') : t('charEnding.continue')
+            }
           >
-            {allSaved ? t('charEnding.backToGameplay') : t('charEnding.continue')}
+            <img
+              src={allSaved ? backToGameplayBtnImg : continueBtnImg}
+              alt=""
+              decoding="async"
+            />
           </button>
           {allSaved ? (
             <button
               type="button"
-              className="btn btn-done"
+              className="btn-img-action"
               onClick={() => dispatch({ type: 'SUBMIT' })}
+              aria-label={t('charEnding.seeFinal')}
             >
-              {t('charEnding.seeFinal')}
+              <img src={seeFinalEndingBtnImg} alt="" decoding="async" />
             </button>
           ) : null}
         </div>

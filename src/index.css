@@ -567,6 +567,38 @@ h1.intro-header {
   color: #ffc168;
 }
 
+/* Image-only Play button at the bottom of the tutorial screen */
+.btn-tutorial-play {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.2s ease;
+}
+
+.btn-tutorial-play img {
+  display: block;
+  width: clamp(96px, 14vw, 140px);
+  height: auto;
+}
+
+.btn-tutorial-play:hover {
+  transform: scale(1.06) translateY(-2px);
+  filter: brightness(1.06) drop-shadow(0 8px 18px rgba(255, 0, 153, 0.35));
+}
+
+.btn-tutorial-play:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.btn-tutorial-play:active {
+  transform: scale(0.97);
+}
+
 /* Gameplay */
 .screen-gameplay {
   background-color: var(--bg-game);
@@ -2338,8 +2370,42 @@ html[lang='zh'] .dialogue-speaker {
 .ending-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.9rem;
   margin-top: 1.5rem;
+}
+
+/* Image-only action buttons used on character / final ending screens
+   (Replay / Back to Start / Back to gameplay / See final ending). */
+.btn-img-action {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.2s ease;
+}
+
+.btn-img-action img {
+  display: block;
+  height: 56px;
+  width: auto;
+}
+
+.btn-img-action:hover {
+  transform: scale(1.05) translateY(-2px);
+  filter: brightness(1.06) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.28));
+}
+
+.btn-img-action:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.btn-img-action:active {
+  transform: scale(0.97);
 }
 
 /* Micro-interactions: floating decors & hover feedback */
@@ -2538,7 +2604,9 @@ html[lang='zh'] .dialogue-speaker {
   }
 
   .btn-start-overlay:hover,
-  .btn-continue-img:hover {
+  .btn-continue-img:hover,
+  .btn-tutorial-play:hover,
+  .btn-img-action:hover {
     transform: none;
     filter: brightness(1.05);
   }
