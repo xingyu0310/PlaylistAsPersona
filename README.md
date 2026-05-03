@@ -1,556 +1,157 @@
-# BurrowBeats / Playlist as Persona
+# BurrowBeats · Playlist as Persona
 
-## 游戏需求文档 PRD v1.0
+> 一个关于"音乐分享如何成为人格展示"的网页互动叙事 / 轻策略小游戏。
+> 玩家扮演 **Playlist Detective**，在动物音乐社交平台 **BurrowBeats** 上，
+> 通过角色资料、物品故事和私人聆听记录，为每位角色挑选他们愿意公开展示的 **Public Playlist**。
 
-## 1. 项目概述
-
-### 1.1 项目名称
-
-**BurrowBeats: Playlist as Persona**
-
-### 1.2 项目类型
-
-网页互动叙事 / 轻策略选择游戏 / 音乐人格判断游戏
-
-### 1.3 项目一句话描述
-
-玩家在一个动物音乐社交平台 **BurrowBeats** 中，扮演 **Playlist Stylist**，通过观察角色资料、物品故事和听歌历史，帮助不同角色挑选他们愿意公开展示的 **Public Playlist**，从而理解“音乐分享如何成为人格展示”的主题。
-
-### 1.4 项目背景
-
-本项目来源于对音乐分享行为的研究。音乐在社交平台上不仅是内容消费，也是一种自我表达方式。人们不会随便分享歌，而是会选择那些能够代表自己、塑造形象、传递情绪、或帮助自己被别人理解的歌曲。
-
-因此，这个游戏并不是在测试“你会不会猜歌”，而是在让玩家体验：
-
-* 人们如何通过音乐进行自我呈现
-* 私人听歌记录与公开展示之间的差异
-* 角色身份、故事、情绪与选歌之间的关系
+线上体验：<https://xingyu0310.github.io/PlaylistAsPersona/>
 
 ---
 
-## 2. 项目目标
+## 1. 项目简介
 
-### 2.1 核心目标
+BurrowBeats 不是一个"猜歌"游戏，它在让玩家体验：
 
-将目前已经完成的视觉原型，开发为一个**可实际游玩的网页游戏**。
+- 人们如何通过音乐进行**自我呈现**
+- **私人听歌**与**公开展示**之间的差异
+- 角色身份、故事、情绪与选歌之间的关系
 
-### 2.2 设计目标
+每位动物角色都会把一段委托交给玩家："帮我从我的聆听历史中挑出 3 首，作为我对外公开的歌单。"
+玩家通过观察线索做出判断，然后在结局页面看到自己的选择如何塑造了这个角色对外的形象。
 
-1. 让玩家能够完成完整的游戏流程
-   从开始界面进入，到阅读规则、游玩、保存选择、提交、获得结果反馈。
-
-2. 让“观察角色并推测公开歌单”这件事形成明确玩法闭环
-   玩家需要通过多个线索做判断，而不是随机点选。
-
-3. 让游戏机制服务于 thesis 的核心概念
-   即“playlist is persona”，公开歌单不是私人真实的全部，而是经过选择后呈现给外界的身份版本。
-
-4. 让后续内容扩展更容易
-   方便之后继续添加更多角色、更多歌曲、更多故事文本和结果逻辑。
+这是一个艺术 / 研究向的 thesis 项目，核心命题是 **"playlist is persona"**。
 
 ---
 
-## 3. 用户与使用场景
+## 2. 当前实现状态
 
-### 3.1 目标用户
+项目已从原 PRD 的视觉原型阶段，落地为一个**可完整游玩的网页版本**。
 
-* 对互动叙事 / 轻游戏感兴趣的用户
-* 对音乐、人格、社交媒体文化感兴趣的用户
-* thesis exhibition / demo day / 答辩评委 / 同学 / 老师
-* 不一定熟悉真实音乐知识，但愿意根据线索做判断的普通玩家
+### 已实现功能
 
-### 3.2 用户场景
+- 完整的页面流程：Start → Intro → Tutorial → Gameplay → Character Ending（每个角色） → Final Ending
+- 3 个可玩角色：**Flash Beat**（Influencer / DJ）、**Soft Frame**（艺术家）、**Marshmallow**（占星 / 治愈系）
+- 角色切换栏 + Profile / Story（learn more）双视图
+- Listening History 列表（点击添加 / 移除，最多 3 首）
+- 单首歌曲 **Song Detail Modal**，含封面、描述与音频试听
+- Public Playlist 槽位 + Save 流程（每个角色保存后立即进入该角色的 ending）
+- Done 提交校验（未完成时给出 toast 提示）
+- 最终结局 **Final Ending Screen**：综合三角色选择给出整体反馈
+- **任务面板**（左上 `!`）与**教程回看**（右上 `?`）
+- **中英双语切换**（角色名 / MBTI / 职业 / 歌名按设计保持英文，其余跟随语言）
+- **背景音乐 + 全局点击音效**，可在右上角开关 BGM
+- 浮动 emoji、对话气泡、轻量动画等氛围元素
+- 通过 GitHub Actions 自动构建并部署到 GitHub Pages
 
-* 在作品展示现场独立游玩
-* 在网页上远程体验
-* 在老师或观众试玩时快速理解项目概念
-* 在研究展示中作为“可交互论点”存在
+### 与原 PRD 的几处主要差异
 
----
-
-## 4. 核心玩法概述
-
-### 4.1 玩家身份
-
-玩家扮演 **Playlist Stylist**，帮助动物角色策划他们想展示给公众的歌单。
-
-### 4.2 核心玩法循环
-
-每个角色的游玩逻辑为：
-
-1. 切换到某个角色
-2. 阅读角色基础资料
-3. 查看物品及其对应的小故事
-4. 查看该角色的 listening history
-5. 从历史歌曲中判断哪些歌更适合进入 **public playlist**
-6. 将选中的歌填入中间的 Public Playlist 区域
-7. 保存选择
-8. 完成所有角色后点击 Done 提交
-9. 进入结果反馈页面，查看选择是否合理以及原因说明
-
-### 4.3 核心判断逻辑
-
-玩家不是在选择“角色最喜欢的歌”，而是在选择：
-
-* 这个角色**愿意公开展示**的歌
-* 最符合其想对外呈现的身份的歌
-* 最能体现其 persona 的歌
+| 原 PRD | 当前实现 |
+| --- | --- |
+| 玩家身份 = Playlist **Stylist** | 现称 Playlist **Detective**（更贴近"读取线索"的玩法体验） |
+| Save 后继续游玩，所有角色完成后统一看结果 | Save 后**立即进入该角色的 Character Ending**，再回到 Gameplay 切下一位 |
+| 单一 Result 页 | 拆为 **Character Ending（每位）** + **Final Ending（总结）** |
+| 默认仅文字反馈 | 增加了角色立绘、对话框、emoji 漂浮等视觉反馈 |
 
 ---
 
-## 5. 信息架构 / 页面结构
+## 3. 技术栈
 
-当前游戏包含以下页面：
+- **构建工具**：[Vite 6](https://vitejs.dev/)
+- **框架**：React 18（函数组件 + Hooks）
+- **状态管理**：`useReducer` + `Context`（见 `src/context/GameContext.jsx`）
+- **样式**：原生 CSS（`src/index.css`），手写像素 / 手账风格 UI
+- **数据**：纯 JSON（`src/data/characters.json`），与 UI 完全解耦
+- **音频**：浏览器原生 `Audio`，BGM 与点击音效封装在 `src/utils/`
+- **部署**：GitHub Actions → GitHub Pages（见 `.github/workflows/deploy-github-pages.yml`）
+- **语言**：English / 中文，i18n 字典见 `src/i18n/strings.js`
 
-1. **开始界面 Start Screen**
-2. **背景介绍 / 世界观介绍 Intro Screen**
-3. **How to Play / 教学界面 Tutorial Screen**
-4. **主游玩界面 Gameplay Screen**
-5. **任务列表弹窗 Mission Panel**
-6. **教程回看弹窗 Help / Tutorial Replay Panel**
-7. **结果反馈界面 Result Screen**
-8. （可选）**结束总结界面 Final Summary Screen**
-
----
-
-## 6. 页面需求
+无任何后端、数据库或第三方付费服务。
 
 ---
 
-## 6.1 开始界面 Start Screen
+## 4. 本地运行
 
-### 功能目标
+### 环境要求
 
-让用户进入游戏，并快速感知游戏主题与风格。
+- Node.js **>= 20**（与 CI 环境一致）
+- npm 9+
 
-### 页面元素
+### 启动步骤
 
-* 游戏标题：**Playlist as Persona**
-* 背景角色图
-* Start 按钮
+```bash
+npm install
+npm run dev          # 本地开发，默认 http://localhost:5173
+npm run build        # 产出 dist/，与 GitHub Pages 部署一致
+npm run preview      # 预览生产构建
+```
 
-### 交互需求
-
-* 点击 **Start** 进入背景介绍页面
-* 按钮有 hover / press 状态反馈
-* 页面加载时有轻微动态效果（可选）
-
-  * 标题轻微浮动
-  * icon 闪烁
-  * 背景元素缓慢移动
-
-### 开发说明
-
-* 需支持响应式缩放
-* 首次进入加载游戏资源
+> Vite 配置：在 production 下 `base` 自动设为 `/PlaylistAsPersona/`，
+> 以适配 GitHub Pages 项目站点路径。本地开发使用 `/`，无需手动切换。
 
 ---
 
-## 6.2 背景介绍页面 Intro Screen
+## 5. 目录结构
 
-### 功能目标
-
-向玩家解释 BurrowBeats 世界观和游戏身份设定。
-
-### 页面内容
-
-建议保留你现在的文案结构：
-
-* 在 BurrowBeats，playlist 不只是音乐，而是动物向世界展示自己的方式
-* 一些动物知道自己想展示什么形象
-* 另一些动物需要帮助策划 public playlist
-* 玩家扮演 Playlist Stylist
-
-### 页面元素
-
-* 标题 / 副标题
-* 背景介绍文字
-* Continue 按钮
-
-### 交互需求
-
-* 点击 Continue 进入 How to Play 页面
-* 可加入逐段淡入动画增强阅读感
-
----
-
-## 6.3 How to Play 页面
-
-### 功能目标
-
-告诉玩家怎么玩，降低理解门槛。
-
-### 应包含的教学内容
-
-1. 左侧可以切换角色
-2. 中间可以看角色资料和物品故事
-3. 右侧可以查看听歌历史
-4. 玩家需要从 listening history 中挑选适合公开展示的歌曲
-5. 每个角色需要选定固定数量的歌曲
-6. 完成后点击 Save 保存，再点击 Done 提交全部答案
-7. 左上角叹号查看任务列表，右上角问号可回看教程
-
-### 页面元素
-
-* 图文步骤说明
-* Continue / Play 按钮
-
-### 交互需求
-
-* 点击进入主游玩界面
-* 首次进入游戏时默认展示一次
-* 后续可通过右上角问号再次打开
+```
+.
+├── .github/workflows/        # GitHub Pages 自动部署
+├── docs/                     # （历史）GitHub Pages 静态产物，已改用 Actions
+├── public/                   # 公共资源（字体等）
+├── src/
+│   ├── App.jsx               # 顶层路由（按 state.page 切屏）
+│   ├── main.jsx              # 入口；挂载全局点击音效与 BGM
+│   ├── index.css             # 全局样式
+│   ├── constants.js          # PLAYLIST_SIZE = 3
+│   ├── context/
+│   │   ├── GameContext.jsx   # 全局状态 + reducer + i18n helpers
+│   │   └── gameTypes.js
+│   ├── screens/              # 六个主屏幕
+│   │   ├── StartScreen.jsx
+│   │   ├── IntroScreen.jsx
+│   │   ├── TutorialScreen.jsx
+│   │   ├── GameplayScreen.jsx
+│   │   ├── CharacterEndingScreen.jsx
+│   │   └── FinalEndingScreen.jsx
+│   ├── components/           # 可复用 UI（HelpPanel / MissionPanel / SongDetailModal …）
+│   ├── data/
+│   │   └── characters.json   # 全部游戏内容数据
+│   ├── i18n/strings.js       # 中 / 英文文案字典
+│   ├── utils/                # 音频、结局计算、emoji、文案高亮等工具
+│   └── assets/               # 角色立绘、歌曲封面、音频、UI 图等
+├── index.html
+├── vite.config.js
+└── package.json
+```
 
 ---
 
-## 6.4 主游玩界面 Gameplay Screen
+## 6. 游戏流程（实现版）
 
-这是游戏最核心的页面。
+1. **Start Screen**：进入游戏。
+2. **Intro Screen**：交代世界观与玩家身份（Playlist Detective）。
+3. **Tutorial Screen**：图文步骤说明，首次进入会展示一次。
+4. **Gameplay Screen**（核心循环，对每位角色重复）：
+   1. 在左侧切换角色。
+   2. 中间区域阅读 Profile，点击 *learn more* 进入 Story 视图查看物品故事。
+   3. 右侧 Listening History 中点击歌曲，加入 / 移除 Public Playlist（上限 3 首）。
+   4. 任意歌曲可打开 **Song Detail** 试听并阅读描述。
+   5. 选满 3 首后点 **Save** → 立即进入该角色的 Character Ending。
+5. **Character Ending Screen**：基于该角色选择给出反馈与对话，点 Continue 回到 Gameplay。
+6. 三位角色全部 Save 后，点 **Done** 进入 **Final Ending Screen**，看到整体评价；
+   可选择 Replay 或 Back to Start。
 
-### 页面布局
+辅助交互：
 
-#### 左侧区域：角色切换栏
-
-* 三个角色头像按钮
-* 当前选中的角色高亮显示
-
-#### 中间区域：角色信息区
-
-包括：
-
-* 角色名称
-* 基础资料（Name / Profession / MBTI 等）
-* Public Playlist 空槽位
-* learn more 按钮
-* 角色故事 / 物品故事查看区域
-
-#### 右侧区域：Listening History
-
-* 展示该角色的歌曲历史列表
-* 每首歌含时间信息
-* 歌曲可点击或拖入 Public Playlist
-
-#### 顶部功能区
-
-* 左上角：叹号按钮，打开任务列表
-* 右上角：问号按钮，打开教程回看
-
-#### 底部操作区
-
-* Save 按钮
-* Done 按钮
+- 左上 `!` 打开 **Mission Panel**，查看每位角色当前进度。
+- 右上 `?` 打开 **Help Panel**，回看教程。
+- 右上 BGM / 语言开关，可随时切换音乐和中英文。
 
 ---
 
-## 7. 主游玩界面详细功能需求
+## 7. 数据结构
 
-## 7.1 角色切换
-
-### 功能描述
-
-玩家可在左侧点击头像切换角色。
-
-### 交互规则
-
-* 点击头像后，中间与右侧内容同步切换为对应角色数据
-* 如果当前角色已有保存内容，需保留
-* 当前选中角色需要有清晰高亮态
-* 未选中角色可显示普通态
-
-### 数据需求
-
-每个角色至少包含：
-
-* id
-* 名称
-* 头像
-* 基础资料
-* 物品故事
-* 听歌历史
-* 正确答案 / 推荐答案
-* 玩家当前选择状态
-* 是否已保存
-
----
-
-## 7.2 角色资料展示
-
-### 功能描述
-
-展示当前角色的基础 persona 信息。
-
-### 字段建议
-
-* Name
-* Profession
-* MBTI
-* （可选）Tagline / short bio
-
-### 要求
-
-* 内容根据角色切换动态更新
-* 保留强视觉区分，帮助玩家理解角色差异
-
----
-
-## 7.3 Learn More / 物品故事查看
-
-### 功能描述
-
-玩家通过“learn more”进入线索查看模式，阅读与物品对应的小故事。
-
-### 交互模式建议
-
-可采用两种方式之一：
-
-#### 方案 A：点击 learn more 后切换到 story mode
-
-* 中间角色信息区切换成物品故事区
-* 展示多个物品与对应文本卡片
-* 可点击返回资料页
-
-#### 方案 B：资料区和故事区局部展开
-
-* 点击 learn more 后在中间区域展开物品故事面板
-* 不离开当前页面
-
-### 线索内容要求
-
-每个角色建议至少 4 到 6 条故事线索。
-每条线索应帮助玩家理解：
-
-* 性格
-* 情绪状态
-* 过往经历
-* 社交形象
-* 音乐偏好
-* 私人与公开之间的张力
-
----
-
-## 7.4 Listening History 列表
-
-### 功能描述
-
-展示当前角色的私人听歌历史。
-
-### 每首歌曲应包含字段
-
-* song id
-* title
-* subtitle / genre / short note（可选）
-* listening time
-* song detail / description（hover 或点击显示，可选）
-* 是否已被加入 public playlist
-
-### 展示要求
-
-* 列表清晰可读
-* 时间信息保留，用于帮助推测角色在何种状态下听歌
-* 不同时段可形成叙事暗示，比如：
-
-  * 深夜歌曲更私人
-  * 白天歌曲更对外
-  * breakup 后循环歌曲更情绪化
-
-### 交互方式建议
-
-二选一，或者后续都支持：
-
-#### 方式 A：点击添加
-
-* 点击某首歌后，自动加入 Public Playlist 空位
-* 再点击一次可移除
-
-#### 方式 B：拖拽添加
-
-* 将歌曲拖入中间 playlist 槽位
-* 更有游戏感，但开发复杂度更高
-
-### 推荐
-
-第一版优先使用 **点击添加/移除**，更稳，后续再升级拖拽。
-
----
-
-## 7.5 Public Playlist 区域
-
-### 功能描述
-
-用于显示玩家当前为该角色选定的公开歌曲。
-
-### 规则建议
-
-* 每个角色固定选择 **3 首歌**
-* 槽位不足时可继续选
-* 超过 3 首时提示“最多选择 3 首”
-* 已选歌曲可点击移除或替换
-
-### 状态
-
-* 空槽位
-* 已填充槽位
-* hover / selected 状态
-* 错误提示状态
-
----
-
-## 7.6 Save 按钮
-
-### 功能描述
-
-保存当前角色的选歌结果。
-
-### 规则
-
-* 若未选满 3 首，则提示“Please select 3 songs before saving.”
-* 保存后：
-
-  * 当前角色状态标记为已保存
-  * 左侧角色头像可出现小勾或其他完成标识
-  * 本地内存中保存当前选择
-
-### 反馈
-
-* 成功保存 toast 提示
-* 按钮短暂变更为 Saved
-
----
-
-## 7.7 Done 按钮
-
-### 功能描述
-
-提交全部角色的 playlist 选择，进入结果页。
-
-### 规则
-
-* 若并非所有角色都已完成，点击后弹出提醒：
-
-  * 哪些角色尚未完成
-  * 是否继续检查
-* 只有当全部角色完成后，允许正式提交
-
-### 提交后
-
-* 锁定选择结果
-* 跳转到结果页
-* 计算得分 / 匹配度 / 反馈文本
-
----
-
-## 7.8 左上角任务列表按钮（叹号）
-
-### 功能描述
-
-帮助玩家随时查看当前任务。
-
-### 弹窗内容建议
-
-**Your task:**
-
-* Explore each character’s profile
-* Read their object stories
-* Review their listening history
-* Pick 3 songs for each character’s public playlist
-* Save each playlist before submitting
-
-### 额外内容
-
-可显示当前进度：
-
-* Flash Beat: 2/3 selected
-* Soft Frame: saved
-* Marshmallow: not started
-
----
-
-## 7.9 右上角问号按钮（教程回看）
-
-### 功能描述
-
-允许玩家在游玩中重新查看 how-to-play。
-
-### 弹窗内容
-
-* 与 tutorial 页面一致的简化版说明
-* 可以使用图标 + 简短步骤
-
-### 交互
-
-* 点击问号打开
-* 可关闭返回当前进度，不影响已选内容
-
----
-
-## 8. 游戏规则
-
-### 8.1 角色数量
-
-当前版本：**3 个角色**
-
-### 8.2 每个角色可选歌曲数
-
-当前版本：**5 首 listening history 中选 3 首进入 public playlist**
-
-### 8.3 胜负 / 结果方式
-
-本游戏不强调传统胜负，而强调“推测合理性”。
-
-但为了增强可玩性，仍建议保留结果反馈机制：
-
-* 每个角色有一组推荐答案
-* 玩家选择与推荐答案进行匹配
-* 输出：
-
-  * 命中数量
-  * 匹配度评价
-  * 为什么这些歌更适合 public persona 的解释
-
----
-
-## 9. 结果反馈页面需求
-
-## 9.1 页面目标
-
-让玩家看到自己的判断结果，并理解背后的原因，而不是只看到对错。
-
-## 9.2 内容结构
-
-对每个角色展示：
-
-* 玩家选择的歌曲
-* 推荐 public playlist
-* 匹配程度
-* 解释文本
-
-### 示例反馈维度
-
-* 你抓住了这个角色的外向表演欲
-* 你注意到了他私人情绪和公开形象之间的差异
-* 这首歌虽然很重要，但太私人，不一定会出现在公开 playlist 中
-
-## 9.3 总结反馈
-
-最后给玩家一个整体评价，例如：
-
-* You read persona through emotion
-* You focused more on private feelings than public image
-* You’re a sharp Playlist Stylist
-
-## 9.4 后续按钮
-
-* Replay
-* Back to Start
-* （可选）View all character explanations
-
----
-
-## 10. 数据结构建议
-
-为了方便 AI 辅助编程与 GitHub 协作，建议使用结构化 JSON 管理角色数据。
-
-### 10.1 角色数据结构示例
+所有可玩内容都集中在 `src/data/characters.json`。
+每位角色大致结构如下（节选 / 简化）：
 
 ```json
 {
@@ -558,185 +159,89 @@
   "name": "Flash Beat",
   "profession": "Influencer / DJ",
   "mbti": "ESFP",
-  "avatar": "flashbeat.png",
-  "profileImage": "flashbeat_profile.png",
+  "tagline":  { "en": "...", "zh": "..." },
+  "taskBlurb":{ "en": "...", "zh": "..." },
+  "assignment": {
+    "title": { "en": "...", "zh": "..." },
+    "body":  { "en": ["..."], "zh": ["..."] }
+  },
+  "assignmentDialogue": [
+    { "speaker": "self",   "text": { "en": "...", "zh": "..." } },
+    { "speaker": "player", "text": { "en": "...", "zh": "..." } }
+  ],
   "stories": [
     {
       "id": "mic",
-      "object": "Microphone",
-      "text": "He remembers the first time he spoke into a microphone..."
-    },
-    {
-      "id": "console",
-      "object": "Tamagotchi / game console",
-      "text": "Grew up playing 8-bit console games..."
+      "object": { "en": "Microphone", "zh": "麦克风" },
+      "text":   { "en": "...", "zh": "..." }
     }
   ],
   "listeningHistory": [
     {
-      "id": "song1",
+      "id": "song_glitching",
       "title": "Glitching Heartbeat",
       "time": "02:05 AM",
-      "description": "A breakup song with fragmented electronic textures."
+      "description": { "en": "...", "zh": "..." }
     }
   ],
-  "correctPublicPlaylist": ["song3", "song4", "song5"]
+  "correctPublicPlaylist": ["song_x", "song_y", "song_z"]
 }
 ```
 
----
+要点：
 
-## 11. 状态管理需求
+- 凡是双语字段都以 `{ "en": "...", "zh": "..." }` 形式存在，由 `pickLocalized`（见 `GameContext.jsx`）按当前语言取值。
+- 角色名、MBTI、职业、歌名为单一英文字符串（产品规则：保持英文）。
+- 文本中可使用 `**...**` 进行强调，由 `src/utils/formatInlineEmphasis.js` 解析。
+- `correctPublicPlaylist` 是用于 Final Ending 计算"匹配度"的参考答案。
+- 结局文案另存在 `src/utils/endings.js`，与角色数据分离，方便单独迭代。
 
-前端开发时至少需要管理以下状态：
+### 添加新内容
 
-* 当前页面 pageState
-* 当前选中角色 currentCharacterId
-* 当前角色是否处于 story mode
-* 每个角色已选歌曲 selectedSongs
-* 每个角色是否已保存 isSaved
-* 教程弹窗是否打开
-* 任务列表是否打开
-* 游戏是否已提交
-* 最终结果 resultData
-
----
-
-## 12. 非功能需求
-
-## 12.1 技术要求
-
-* 基于网页开发
-* 建议技术栈：
-
-  * HTML / CSS / JavaScript 或 React
-  * 数据 JSON 化
-  * GitHub 进行版本管理
-* AI 可辅助生成组件、状态逻辑、交互动画和数据结构代码
-
-## 12.2 性能要求
-
-* 页面切换流畅
-* 不依赖大型资源加载
-* 尽量减少首次加载时间
-
-## 12.3 兼容性要求
-
-* 优先适配桌面端浏览器
-* 分辨率优先考虑展示场景
-* 后续再考虑移动端
-
-## 12.4 可维护性要求
-
-* 角色数据、歌曲数据、故事文本与 UI 分离
-* 方便后续替换 speculative songs
-* 方便增加新角色
+| 想做的事 | 改动位置 |
+| --- | --- |
+| 添加一首歌 | 在对应角色的 `listeningHistory` 中加一项；放置音频到 `src/assets/audio/`、封面到 `src/assets/songs/` |
+| 添加一段物品故事 | 对应角色的 `stories` 数组加一项 |
+| 添加一个新角色 | `characters.json` 末尾追加；准备立绘、profile-bg；视情况扩展 `endings.js` |
+| 修改 UI 文案 | `src/i18n/strings.js` |
+| 调整选歌数量 | `src/constants.js` 中的 `PLAYLIST_SIZE` |
 
 ---
 
-## 13. 开发优先级
+## 8. 部署
 
-## P0 必做
+每次推送到 `main` / `master` 时，GitHub Actions 会自动：
 
-1. 开始页
-2. Intro 页
-3. How-to-play 页
-4. 主游玩页
-5. 三角色切换
-6. 物品故事查看
-7. listening history 展示
-8. 选歌进入 public playlist
-9. Save 功能
-10. Done 提交
-11. 结果反馈页
-12. 任务列表弹窗
-13. 教程回看弹窗
+1. `npm ci`
+2. `npm run build`（输出 `dist/`，`base = /PlaylistAsPersona/`）
+3. 通过 `actions/deploy-pages` 发布到 GitHub Pages
 
-## P1 应做
-
-1. 角色完成状态提示
-2. 保存成功反馈
-3. 未完成拦截提示
-4. 结果页解释文本优化
-5. 轻量动画
-
-## P2 可选
-
-1. 拖拽选歌
-2. 音效
-3. 更复杂评分机制
-4. speculative song detail 页面
-5. 结局分支文本
+仓库设置中需将 **Settings → Pages → Source** 设为 *GitHub Actions*。
+工作流文件：`.github/workflows/deploy-github-pages.yml`。
 
 ---
 
-## 14. 建议开发拆分
-
-你后面用 AI 辅助编程时，可以按这个顺序拆任务，不然很容易一锅炖成代码火锅：
-
-### 阶段 1：基础页面跑通
-
-* Start
-* Intro
-* Tutorial
-* Gameplay
-* Result
-
-### 阶段 2：核心交互
-
-* 角色切换
-* 数据加载
-* learn more 故事切换
-* 选歌 / 移除歌
-* 保存与提交
-
-### 阶段 3：规则完善
-
-* 校验是否选满
-* 校验是否全部完成
-* 结果计算
-* 任务与教程弹窗
-
-### 阶段 4：体验优化
-
-* hover / click 反馈
-* 动画
-* 文案优化
-* bug fix
-
----
-
-## 15. 验收标准
-
-当以下条件全部成立时，可以认为 v1 基本可玩：
-
-1. 玩家能够从开始页顺利进入游戏
-2. 玩家能够理解规则并完成至少一个角色的选歌
-3. 三个角色都可以切换并独立保存
-4. 玩家完成全部角色后可成功提交
-5. 系统可输出对应结果反馈
-6. 任务列表和教程回看在游玩中可正常打开
-7. 刷新前页面状态至少在当前 session 内稳定运行
-8. 不出现明显阻塞性 bug
-
----
-
-## 16. 后续迭代方向
+## 9. 后续可能的迭代方向
 
 ### 内容层
-
-* 把歌曲进一步 speculative 化
-* 增加歌曲 description / cover art / genre tags
-* 增强私人听歌与公开歌单的反差
+- 进一步 speculative 化歌曲（描述、封面、情绪标签）
+- 增加更多角色或 alt 路线
+- 强化"私人 vs 公开"对照
 
 ### 机制层
-
-* 引入“观众反馈”或“平台算法偏好”
-* 增加不同类型角色
-* 增加分支结局
+- 加入"观众反馈"或"平台算法偏好"等新维度
+- 拖拽选歌（目前为点击）
+- 多结局分支
 
 ### 展览层
+- 安装式展示版本（更强的音效与空间感）
+- 旁观者观看模式
+- 触摸屏 / 移动端适配
 
-* 加入更强的音效与空间感
-* 考虑安装式展示版本
-* 增加旁观者观看模式
+---
+
+## 10. 致谢与说明
+
+- 本项目源自一项关于"音乐分享行为如何塑造数字身份"的研究 / thesis。
+- 所有音乐为 speculative 创作，仅用于本作品内的叙事，不涉及任何真实歌曲版权。
+- 角色立绘、UI 图标与字体（Gaegu / Kalam）共同构建出一种手帐 + 像素的混合风格，用来对应 BurrowBeats 这个"动物音乐社交平台"的虚构世界。
